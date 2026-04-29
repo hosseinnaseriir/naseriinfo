@@ -1,0 +1,45 @@
+---
+import '../styles/global.css';
+import { localeConfig, type Locale } from "../i18n/config";
+
+interface Props {
+	title?: string;
+	description?: string;
+	locale?: Locale;
+	path?: string;
+}
+
+const { title = "Naseri Info", description = "Personal website", locale = "en", path } = Astro.props as Props;
+const dir = localeConfig[locale].dir;
+const defaultPath = path ?? Astro.url.pathname;
+const canonical = Astro.site ? new URL(defaultPath, Astro.site).toString() : null;
+const alternates = Astro.site
+	? [
+			{ hreflang: "en", href: new URL(`/en${defaultPath.replace(/^\/(en|fa)/, "")}`, Astro.site).toString() },
+			{ hreflang: "fa", href: new URL(`/fa${defaultPath.replace(/^\/(en|fa)/, "")}`, Astro.site).toString() },
+			{ hreflang: "x-default", href: new URL("/en", Astro.site).toString() }
+		]
+	: [];
+---
+
+<!doctype html>
+<html lang={locale} dir={dir}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<meta property="og:locale" content={locale === "fa" ? "fa_IR" : "en_US"} />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		{canonical && <link rel="canonical" href={canonical} />}
+		{alternates.map((item) => <link rel="alternate" hreflang={item.hreflang} href={item.href} />)}
+		<title>{title}</title>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>

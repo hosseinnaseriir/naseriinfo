@@ -1,0 +1,62 @@
+---
+import type { Locale } from "../../../i18n/config";
+
+interface Props {
+  locale: Locale;
+  url?: string;
+  youtubeUrl?: string;
+  aparatUrl?: string;
+  title: string;
+}
+
+const { locale, url, youtubeUrl, aparatUrl, title } = Astro.props as Props;
+const sourceUrl = locale === "fa" ? (aparatUrl ?? url ?? youtubeUrl) : (youtubeUrl ?? url ?? aparatUrl);
+
+function toEmbedUrl(raw?: string): string | null {
+  if (!raw) return null;
+  try {
+    const parsed = new URL(raw);
+    const host = parsed.hostname.replace("www.", "");
+
+    if (host.includes("youtube.com")) {
+      const videoId = parsed.searchParams.get("v");
+      if (!videoId) return null;
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+
+    if (host.includes("youtu.be")) {
+      const videoId = parsed.pathname.replace("/", "");
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    }
+
+    if (host.includes("aparat.com")) {
+      const match = parsed.pathname.match(/\/v\/([^/?#]+)/);
+      if (!match) return null;
+      return `https://www.aparat.com/video/video/embed/videohash/${match[1]}/vt/frame`;
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+const embedUrl = toEmbedUrl(sourceUrl);
+---
+
+{
+  embedUrl ? (
+    <div class="surface overflow-hidden">
+      <div class="relative w-full pt-[56.25%]">
+        <iframe
+          class="absolute left-0 top-0 h-full w-full"
+          src={embedUrl}
+          title={title}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  ) : null
+}

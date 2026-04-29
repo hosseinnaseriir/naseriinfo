@@ -1,0 +1,21 @@
+---
+interface Props {
+  as?: "h1" | "h2" | "h3" | "p" | "span";
+  variant?: "headline" | "body1" | "body2" | "button" | "caption";
+  class?: string;
+}
+
+const { as = "p", variant = "body1", class: className = "" } = Astro.props as Props;
+const Tag = as;
+const classes = {
+  headline: "text-4xl font-semibold tracking-tight",
+  body1: "text-lg text-[var(--color-text)]",
+  body2: "text-base text-[var(--color-text-muted)]",
+  button: "text-[var(--text-button)] font-medium",
+  caption: "text-sm text-[var(--color-text-muted)]"
+};
+---
+
+<Tag class={`${classes[variant]} ${className}`}>
+  <slot />
+</Tag>

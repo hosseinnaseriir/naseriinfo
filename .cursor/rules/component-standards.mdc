@@ -1,0 +1,13 @@
+---
+description: Component architecture and implementation standards
+alwaysApply: true
+---
+
+# Component Standards
+
+- Keep UI components under `src/components/ui`.
+- Components should be presentational and stateless unless interactivity is required.
+- Use Astro props with typed interfaces and safe default values.
+- Expose variants through explicit props (for example `variant="primary"`).
+- Add ARIA attributes and labels for form and popup components.
+- Keep one responsibility per component and avoid deeply nested component trees.

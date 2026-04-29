@@ -1,0 +1,13 @@
+---
+description: MD3-inspired design tokens and accessibility rules
+alwaysApply: true
+---
+
+# Design System Rules
+
+- Follow Material Design 3 principles: clear hierarchy, consistent spacing, accessible interactions.
+- Use design tokens from `src/styles/tokens.css`; avoid hardcoded colors, spacing, and radius values.
+- Keep component APIs semantic and minimal (`variant`, `size`, `tone`).
+- Ensure focus-visible styles exist for interactive elements.
+- Keep typography to system variants only: `headline`, `body1`, `body2`, `button`, `caption`.
+- Prefer composition with layout primitives (`Container`, `Flex`, `Stack`) before custom wrappers.

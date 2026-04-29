@@ -1,0 +1,114 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Container from "../../components/ui/layout/Container.astro";
+import Flex from "../../components/ui/layout/Flex.astro";
+import Stack from "../../components/ui/layout/Stack.astro";
+import Typography from "../../components/ui/typography/Typography.astro";
+import Button from "../../components/ui/button/Button.astro";
+import ArticleCard from "../../components/ui/card/ArticleCard.astro";
+import ServiceCard from "../../components/ui/card/ServiceCard.astro";
+import Input from "../../components/ui/form/Input.astro";
+import TextArea from "../../components/ui/form/TextArea.astro";
+import Checkbox from "../../components/ui/form/Checkbox.astro";
+import Popup from "../../components/ui/popup/Popup.astro";
+import VideoEmbed from "../../components/ui/media/VideoEmbed.astro";
+import { getArticles } from "../../lib/content/articles";
+import { locales, type Locale } from "../../i18n/config";
+
+export async function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const isFa = lang === "fa";
+const articles = await getArticles(lang);
+const services = isFa
+  ? [
+      { title: "مشاوره برای استارتاپ‌ها", description: "کمک به طراحی و توسعه سیستم‌های نرم‌افزاری مقیاس‌پذیر." },
+      { title: "منتورینگ ۱:۱ توسعه‌دهندگان", description: "رشد فنی، مسیر شغلی و تصمیم‌گیری معماری." }
+    ]
+  : [
+      { title: "Consulting for Startups", description: "Build and scale software systems with strong product-engineering tradeoffs." },
+      { title: "1:1 Mentorship for Developers", description: "Career growth, architecture reviews, and practical technical direction." }
+    ];
+---
+
+<Layout
+  locale={lang}
+  title={isFa ? "خانه" : "Home"}
+  description={isFa ? "وب‌سایت شخصی، خدمات، مقالات و راه ارتباطی." : "Personal website with services, articles, and contact options."}
+>
+  <Container as="main" class="py-10 md:py-14">
+    <Flex justify="between" align="center" class="mb-6">
+      <Typography as="h1" variant="headline">{isFa ? "خانه" : "Home"}</Typography>
+      <a class="surface px-3 py-1 text-sm no-underline" href={isFa ? "/en" : "/fa"}>{isFa ? "English" : "فارسی"}</a>
+    </Flex>
+
+    <Stack gap="lg" class="space-y-1">
+      <section class="surface p-4 md:p-6">
+        <Typography variant="body2" class="mb-4">{isFa ? "ویدیو معرفی و شبکه‌های اجتماعی" : "Intro video and social links"}</Typography>
+        <div class="surface p-4">
+          <Typography as="h2" variant="body1" class="font-semibold">{isFa ? "تیتر اصلی با اقدام" : "Headline Slogan with a CTA"}</Typography>
+          <Typography variant="body2" class="mb-4">{isFa ? "زیرتیتر" : "Subheadline"}</Typography>
+          <Flex gap="sm" wrap={true}>
+            <Button variant="primary">{isFa ? "رزرو تماس" : "Book a Call"}</Button>
+            <Button href={`/${lang}/articles`} variant="secondary">{isFa ? "مطالعه مقالات" : "Read Articles"}</Button>
+            <Button variant="ghost" class="hidden md:inline-flex" data-open-popup="intro-popup">{isFa ? "معرفی کوتاه" : "Open Intro"}</Button>
+          </Flex>
+        </div>
+        <div class="mt-4">
+          <VideoEmbed
+            locale={lang}
+            title={isFa ? "ویدیو معرفی" : "Introduction video"}
+            youtubeUrl="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            aparatUrl="https://www.aparat.com/v/abc123"
+          />
+        </div>
+      </section>
+
+      <section>
+        <Typography as="h2" variant="headline" class="mb-4 text-3xl">{isFa ? "خدمات" : "Services (Who I help!)"}</Typography>
+        <div class="grid gap-4 md:grid-cols-2">
+          {services.map((service) => <ServiceCard title={service.title} description={service.description} />)}
+        </div>
+      </section>
+
+      <section>
+        <Typography as="h2" variant="headline" class="mb-4 text-3xl">{isFa ? "مقالات" : "Articles"}</Typography>
+        {articles.length > 0 ? (
+          <div class="grid gap-4">
+            {articles.map((article) => (
+              <ArticleCard
+                title={article.title}
+                date={article.publishedAt}
+                excerpt={article.excerpt}
+                href={`/${lang}/articles/${article.slug}`}
+              />
+            ))}
+          </div>
+        ) : (
+          <p class="surface p-4 text-[var(--color-text-muted)]">{isFa ? "هنوز مقاله‌ای منتشر نشده است." : "No articles published yet."}</p>
+        )}
+      </section>
+
+      <section class="surface p-4 md:p-6">
+        <Typography as="h2" variant="body1" class="mb-4 font-semibold">{isFa ? "رزرو تماس (به همراه ایمیل)" : "Book a Call (email included)"}</Typography>
+        <form class="space-y-4">
+          <Input id="title" label={isFa ? "عنوان" : "Title"} placeholder={isFa ? "برای محصولم کمک نیاز دارم..." : "Need help with my product..."} />
+          <Input id="email" type="email" label="Email" placeholder="you@example.com" />
+          <TextArea id="message" label={isFa ? "پیام" : "Message"} placeholder={isFa ? "توضیح کوتاه بنویسید..." : "Write your context..."} />
+          <Checkbox id="agree" label={isFa ? "با تماس از طریق ایمیل موافقم" : "I agree to be contacted by email"} />
+          <Button type="submit" variant="primary">{isFa ? "ارسال درخواست" : "Send Request"}</Button>
+        </form>
+      </section>
+    </Stack>
+  </Container>
+
+  <Popup id="intro-popup" title={isFa ? "معرفی کوتاه" : "Quick Intro"}>
+    <p class="text-[var(--color-text-muted)]">
+      {isFa
+        ? "کمک می‌کنم تیم‌ها با معماری مناسب فرانت‌اند و برنامه اجرایی روشن، محصول قابل اتکا تحویل دهند."
+        : "I help teams ship reliable product experiences with strong frontend architecture and clear delivery plans."}
+    </p>
+  </Popup>
+</Layout>

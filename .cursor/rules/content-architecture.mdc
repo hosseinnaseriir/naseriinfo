@@ -1,0 +1,12 @@
+---
+description: Content source architecture for markdown today and CMS tomorrow
+alwaysApply: true
+---
+
+# Content Architecture
+
+- Use adapter modules in `src/lib/content` to read data.
+- Pages and cards consume adapter output, not raw collection APIs directly.
+- Keep article shape stable: `slug`, `title`, `excerpt`, `publishedAt`, `coverImage`, `tags`.
+- Store local content in Astro collections under `src/content`.
+- If CMS is added later, replace adapter internals and keep component interfaces unchanged.

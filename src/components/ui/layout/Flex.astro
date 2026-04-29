@@ -1,0 +1,25 @@
+---
+interface Props {
+  class?: string;
+  align?: "start" | "center" | "end" | "stretch";
+  justify?: "start" | "center" | "end" | "between";
+  gap?: "sm" | "md" | "lg";
+  wrap?: boolean;
+}
+
+const {
+  class: className = "",
+  align = "start",
+  justify = "start",
+  gap = "md",
+  wrap = false
+} = Astro.props;
+
+const alignMap = { start: "items-start", center: "items-center", end: "items-end", stretch: "items-stretch" };
+const justifyMap = { start: "justify-start", center: "justify-center", end: "justify-end", between: "justify-between" };
+const gapMap = { sm: "gap-2", md: "gap-4", lg: "gap-6" };
+---
+
+<div class={`flex ${alignMap[align]} ${justifyMap[justify]} ${gapMap[gap]} ${wrap ? "flex-wrap" : ""} ${className}`}>
+  <slot />
+</div>
