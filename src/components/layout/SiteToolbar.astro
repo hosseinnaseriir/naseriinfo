@@ -1,0 +1,31 @@
+---
+import Icon from "../ui/icon/Icon.astro";
+import Link from "../ui/link/Link.astro";
+import { TOOLBAR_CONTENT } from "../../assets/contents/common/toolbar";
+import { getContent } from "../../lib/content/ui-text";
+import { localeConfig, type Locale } from "../../i18n/config";
+
+interface Props {
+  locale: Locale;
+  path: string;
+  variant?: "anchored" | "fixed";
+}
+
+const { locale, path, variant = "fixed" } = Astro.props;
+const content = getContent(TOOLBAR_CONTENT, locale);
+const alternateLocale: Locale = locale === "fa" ? "en" : "fa";
+const alternatePath = path.replace(/^\/(en|fa)/, `/${alternateLocale}`) || `/${alternateLocale}`;
+const alternateLabel = localeConfig[alternateLocale].label;
+---
+
+<div class:list={[ "site-toolbar", variant === "anchored" && "site-toolbar--anchored", variant === "fixed" && "site-toolbar--fixed"]}>
+  <button type="button" class="toolbar-btn" data-theme-toggle aria-label={content.themeToggle}>
+    <Icon name="sun" class="toolbar-icon theme-icon-light" />
+    <Icon name="moon" class="toolbar-icon theme-icon-dark" />
+  </button>
+
+  <Link href={alternatePath} variant="toolbar" ariaLabel={content.switchTo(alternateLabel)} external={false}>
+    <Icon name="language" class="toolbar-icon" />
+    <span class="toolbar-lang">{alternateLocale.toUpperCase()}</span>
+  </Link>
+</div>

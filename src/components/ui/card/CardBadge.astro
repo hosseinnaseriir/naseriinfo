@@ -1,0 +1,34 @@
+---
+type CardBadgeTone = "success" | "primary" | "neutral";
+
+interface Props {
+  tone?: CardBadgeTone;
+  pulse?: boolean;
+  hideLabelOnMobile?: boolean;
+  accessibleLabel?: string;
+  class?: string;
+}
+
+const {
+  tone = "success",
+  pulse = true,
+  hideLabelOnMobile = false,
+  accessibleLabel,
+  class: className = ""
+} = Astro.props as Props;
+
+const classes = [
+  "card-badge",
+  `card-badge--${tone}`,
+  pulse ? "card-badge--pulse" : "",
+  hideLabelOnMobile ? "card-badge--hide-label-mobile" : "",
+  className
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<span class={classes} aria-label={hideLabelOnMobile ? accessibleLabel : undefined}>
+  <span class="card-badge__dot" aria-hidden="true"></span>
+  <span class="card-badge__label"><slot /></span>
+</span>

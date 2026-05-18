@@ -1,0 +1,34 @@
+---
+import TechIcon from "../../ui/icon/TechIcon.astro";
+import type { IntroTechItem } from "../../../assets/contents/pages/home/intro-tech";
+
+interface Props {
+  items: IntroTechItem[];
+  label: string;
+}
+
+const { items, label } = Astro.props;
+---
+
+<div class="intro-popup__tech" aria-label={label}>
+  <div class="intro-popup__tech-track">
+    <div class="intro-popup__tech-group">
+      {
+        items.map((item) => (
+          <span class="intro-popup__tech-item" role="img" aria-label={item.label}>
+            <TechIcon name={item.icon} class="intro-popup__tech-icon" />
+          </span>
+        ))
+      }
+    </div>
+    <div class="intro-popup__tech-group" aria-hidden="true">
+      {
+        items.map((item) => (
+          <span class="intro-popup__tech-item">
+            <TechIcon name={item.icon} class="intro-popup__tech-icon" />
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</div>

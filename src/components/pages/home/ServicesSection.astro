@@ -1,0 +1,31 @@
+---
+import Typography from "../../ui/typography/Typography.astro";
+import ServiceCard from "../../ui/card/ServiceCard.astro";
+import { SERVICES_CONTENT } from "../../../assets/contents/pages/home/services";
+import { getContent } from "../../../lib/content/ui-text";
+import type { Locale } from "../../../i18n/config";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props as Props;
+const content = getContent(SERVICES_CONTENT, lang);
+---
+
+<section class="services-section">
+  <Typography as="h2" variant="headline" class="mb-5 text-3xl">{content.title}</Typography>
+  <div class="services-section__grid">
+    {
+      content.items.map((service) => (
+        <ServiceCard
+          title={service.title}
+          description={service.description}
+          icon={service.icon}
+          available={service.available}
+          availableLabel={service.available ? content.availableLabel : undefined}
+        />
+      ))
+    }
+  </div>
+</section>

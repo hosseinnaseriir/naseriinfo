@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
+import SiteToolbar from "../../../components/layout/SiteToolbar.astro";
 import Container from "../../../components/ui/layout/Container.astro";
 import { locales, type Locale } from "../../../i18n/config";
 
@@ -24,7 +25,8 @@ const { Content } = await render(post);
   title={post.data.title}
   description={post.data.excerpt}
 >
-  <Container as="main" class="py-12">
+  <SiteToolbar locale={lang} path={Astro.url.pathname} variant="fixed" />
+  <Container as="main" class="py-4 md:py-6">
     <article class="surface mx-auto max-w-3xl p-6 md:p-8">
       <p class="mb-2 text-sm text-[var(--color-text-muted)]">{post.data.publishedAt}</p>
       <h1 class="mb-5 text-3xl font-semibold">{post.data.title}</h1>

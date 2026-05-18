@@ -1,4 +1,6 @@
 ---
+import Link from "../link/Link.astro";
+
 interface Props {
   href?: string;
   type?: "button" | "submit";
@@ -11,19 +13,20 @@ const { href, type = "button", variant = "primary", class: className = "", ...re
 
 const variants = {
   primary: "bg-[var(--color-primary)] text-[var(--color-primary-contrast)] border-[var(--color-primary)] hover:opacity-90",
-  secondary: "bg-[var(--color-surface)] text-[var(--color-text)] border-[var(--color-border)] hover:bg-gray-50",
-  ghost: "bg-transparent text-[var(--color-text)] border-transparent hover:bg-gray-100"
+  secondary: "bg-[var(--color-surface)] text-[var(--color-text)] border-[var(--color-border)] hover:bg-[var(--color-hover)]",
+  ghost: "bg-transparent text-[var(--color-text)] border-transparent hover:bg-[var(--color-hover)]"
 };
 
 const base = "inline-flex items-center justify-center rounded-md border px-4 py-2 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500";
+const classes = `${base} ${variants[variant]} ${className}`;
 ---
 
 {href ? (
-  <a href={href} class={`${base} ${variants[variant]} ${className}`} {...rest}>
+  <Link href={href} variant="unstyled" class={classes} external={false} {...rest}>
     <slot />
-  </a>
+  </Link>
 ) : (
-  <button type={type} class={`${base} ${variants[variant]} ${className}`} {...rest}>
+  <button type={type} class={classes} {...rest}>
     <slot />
   </button>
 )}

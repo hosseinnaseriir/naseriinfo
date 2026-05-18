@@ -1,13 +1,44 @@
 ---
-description: Component architecture and implementation standards
+description: Component architecture, links, and file organization
 alwaysApply: true
 ---
 
 # Component Standards
 
-- Keep UI components under `src/components/ui`.
-- Components should be presentational and stateless unless interactivity is required.
-- Use Astro props with typed interfaces and safe default values.
-- Expose variants through explicit props (for example `variant="primary"`).
-- Add ARIA attributes and labels for form and popup components.
-- Keep one responsibility per component and avoid deeply nested component trees.
+## Structure
+
+- UI primitives live under `src/components/ui/` (e.g. `button/`, `link/`, `popup/`, `icon/`).
+- Page sections live under `src/components/pages/<page>/`.
+- Layout chrome lives under `src/components/layout/`.
+- Components are presentational and stateless unless interactivity is required.
+- Use typed Astro props with safe defaults; expose behavior via explicit props (`variant`, `lang`, etc.).
+- One responsibility per component; prefer composition with `Container`, `Flex`, `Stack`.
+
+## Links (required)
+
+- Do **not** use raw `<a>` in pages or feature components.
+- Use `Link.astro` for anchors (`variant`: `default`, `social`, `toolbar`, `card`, `unstyled`).
+- Use `SocialLink.astro` for icon-only social links.
+- Use `Button.astro` with `href` for CTA-style navigation (it wraps `Link` internally).
+- Set `external={false}` for internal routes; omit or set `external` for `http(s)` / new-tab behavior.
+
+## Icons
+
+- SVGs live in `src/assets/icons/` (descriptive names: `close.svg`, `github.svg`).
+- Render via `Icon.astro` (`name` matches filename without extension).
+
+## Styles & scripts
+
+- If a component has **more than 10 lines** of `<style>` or `<script>`, split into sibling files:
+  - `ComponentName.styles.astro`
+  - `ComponentName.scripts.astro`
+- Import and render them at the bottom of the main component: `<ComponentNameStyles />`, `<ComponentNameScripts />`.
+- Styles that target classes on **child** components (e.g. `Link`, `SocialLink`) must be **global**:
+  - Prefer `src/styles/components.css` for shared patterns (toolbar, social links, modals), or
+  - Use `<style is:global>` in the `.styles.astro` file.
+- Do **not** rely on scoped styles in an empty `.styles.astro` wrapper for classes applied in other components.
+
+## Accessibility
+
+- Add `aria-label` / `aria-labelledby` on interactive and modal UI.
+- Use semantic HTML (`nav`, `header`, `dialog`, `button` vs `div`).

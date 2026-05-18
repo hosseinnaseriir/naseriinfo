@@ -1,0 +1,85 @@
+---
+import Flex from "../../ui/layout/Flex.astro";
+import Typography from "../../ui/typography/Typography.astro";
+import Button from "../../ui/button/Button.astro";
+import SocialLink from "../../ui/link/SocialLink.astro";
+import SiteToolbar from "../../layout/SiteToolbar.astro";
+// import VideoEmbed from "../../ui/media/VideoEmbed.astro";
+import { HERO_CONTENT, 
+  // HERO_VIDEO, 
+  SOCIAL_LINKS } from "../../../assets/contents/pages/home/hero";
+// import { SPACING } from "../../../styles/tokens";
+import { getContent } from "../../../lib/content/ui-text";
+import type { Locale } from "../../../i18n/config";
+import HeroSectionStyles from "./HeroSection.styles.astro";
+import HeroSectionScripts from "./HeroSection.scripts.astro";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props as Props;
+const content = getContent(HERO_CONTENT, lang);
+const path = Astro.url.pathname;
+---
+
+
+<SiteToolbar locale={lang} path={path} variant="anchored" />
+<section class="hero-section surface flex flex-col px-0 md:p-5">
+
+  <Flex justify="between" align="center" gap="md" wrap={true} class="hero-top mb-2 md:mb-2">
+    <Flex align="center" gap="sm" class="hero-top__profile min-w-0 flex-1 p-4 md:p-0">
+      <div class="hero-avatar">
+        <span class="hero-avatar__ring" aria-hidden="true"></span>
+        <img
+          src="/hossein-naseri.png"
+          alt={content.profileName}
+          width="80"
+          height="80"
+          class="hero-avatar__image"
+          decoding="async"
+        />
+      </div>
+      <div class="min-w-0 flex-1">
+        <Typography as="p" variant="body1" class="truncate font-semibold leading-tight">{content.profileName}</Typography>
+        <div class="hero-profile-role min-w-0 flex-1" title={content.profileRole}>
+          <Typography variant="caption" class="hero-profile-role__text">{content.profileRole}</Typography>
+        </div>
+      </div>
+    </Flex>
+
+    <nav class="hero-top__social flex flex-wrap items-center justify-center gap-2 md:justify-end md:gap-2" aria-label={content.socialNavLabel}>
+      {SOCIAL_LINKS.filter((link) => !link.disabled).map((link) => (
+        <SocialLink href={link.href} icon={link.icon} label={link.label} />
+      ))}
+    </nav>
+  </Flex>
+
+  <div class="hero-banner surface mb-1 md:mb-0 py-5 px-1 mx-1 md:mx-0 md:p-">
+    <div class="mx-auto md:px-2 text-center">
+      <Typography
+        as="h2"
+        variant="headline"
+        class="hero-typewriter mb-3 font-semibold"
+        data-text={JSON.stringify(content.headline)}
+      />
+      <Typography variant="body2" class="hero-subheadline mb-6">{content.subheadline}</Typography>
+
+      <Flex gap="sm" wrap={true} justify="center" class="hero-banner__actions">
+        <Button variant="primary">{content.bookCall}</Button>
+        <Button href={`/${lang}/articles`} variant="secondary" class="hero-banner__read-articles">{content.readArticles}</Button>
+        <Button variant="ghost" data-open-popup="intro-popup">{content.openIntro}</Button>
+      </Flex>
+    </div>
+  </div>
+
+  <!-- <VideoEmbed
+    locale={lang}
+    title={content.videoTitle}
+    youtubeUrl={HERO_VIDEO.youtubeUrl}
+    aparatUrl={HERO_VIDEO.aparatUrl}
+  /> -->
+</section>
+
+<HeroSectionStyles />
+<HeroSectionScripts />

@@ -1,0 +1,30 @@
+---
+import Card from "../../ui/card/Card.astro";
+import Typography from "../../ui/typography/Typography.astro";
+import Input from "../../ui/form/Input.astro";
+import TextArea from "../../ui/form/TextArea.astro";
+import Checkbox from "../../ui/form/Checkbox.astro";
+import Button from "../../ui/button/Button.astro";
+import { CONTACT_CONTENT } from "../../../assets/contents/pages/home/contact";
+import { getContent } from "../../../lib/content/ui-text";
+import type { Locale } from "../../../i18n/config";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props as Props;
+const content = getContent(CONTACT_CONTENT, lang);
+const { fields } = content;
+---
+
+<Card as="section" interactive={false} padding="md">
+  <Typography as="h2" variant="body1" class="mb-4 font-semibold">{content.title}</Typography>
+  <form class="space-y-4">
+    <Input id="title" label={fields.title} placeholder={fields.titlePlaceholder} />
+    <Input id="email" type="email" label={fields.email} placeholder={fields.emailPlaceholder} />
+    <TextArea id="message" label={fields.message} placeholder={fields.messagePlaceholder} />
+    <Checkbox id="agree" label={fields.agree} />
+    <Button type="submit" variant="primary">{content.submit}</Button>
+  </form>
+</Card>

@@ -1,0 +1,41 @@
+---
+type CardTag = "article" | "div" | "section";
+type CardPadding = "none" | "sm" | "md" | "lg";
+
+interface Props {
+  as?: CardTag;
+  padding?: CardPadding;
+  interactive?: boolean;
+  class?: string;
+}
+
+const {
+  as = "div",
+  padding = "md",
+  interactive = true,
+  class: className = ""
+} = Astro.props as Props;
+
+const Tag = as;
+
+const paddingClass: Record<CardPadding, string> = {
+  none: "",
+  sm: "card--padding-sm",
+  md: "card--padding-md",
+  lg: "card--padding-lg"
+};
+
+const classes = [
+  "card",
+  "surface",
+  paddingClass[padding],
+  interactive ? "card--interactive" : "",
+  className
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<Tag class={classes}>
+  <slot />
+</Tag>

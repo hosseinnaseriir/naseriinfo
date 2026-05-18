@@ -1,0 +1,23 @@
+---
+import Flex from "../../ui/layout/Flex.astro";
+import Typography from "../../ui/typography/Typography.astro";
+import Link from "../../ui/link/Link.astro";
+import { HOME_PAGE_CONTENT } from "../../../assets/contents/pages/home/index";
+import { getContent } from "../../../lib/content/ui-text";
+import type { Locale } from "../../../i18n/config";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props as Props;
+const content = getContent(HOME_PAGE_CONTENT, lang);
+const alternateLang: Locale = lang === "fa" ? "en" : "fa";
+---
+
+<Flex justify="between" align="center" class="mb-6">
+  <Typography as="h1" variant="headline">{content.title}</Typography>
+  <Link href={`/${alternateLang}`} variant="unstyled" class="surface px-3 py-1 text-sm" external={false}>
+    {alternateLang === "en" ? "English" : "فارسی"}
+  </Link>
+</Flex>

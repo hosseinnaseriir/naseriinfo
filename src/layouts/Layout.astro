@@ -1,5 +1,7 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
+import { LAYOUT_CONTENT } from "../assets/contents/common/layout";
+import { getContent } from "../lib/content/ui-text";
 import { localeConfig, type Locale } from "../i18n/config";
 
 interface Props {
@@ -9,7 +11,10 @@ interface Props {
 	path?: string;
 }
 
-const { title = "Naseri Info", description = "Personal website", locale = "en", path } = Astro.props as Props;
+const { title, description, locale = "en", path } = Astro.props as Props;
+const layoutContent = getContent(LAYOUT_CONTENT, locale);
+const resolvedTitle = title ?? layoutContent.defaultTitle;
+const resolvedDescription = description ?? layoutContent.defaultDescription;
 const dir = localeConfig[locale].dir;
 const defaultPath = path ?? Astro.url.pathname;
 const canonical = Astro.site ? new URL(defaultPath, Astro.site).toString() : null;
@@ -23,23 +28,51 @@ const alternates = Astro.site
 ---
 
 <!doctype html>
-<html lang={locale} dir={dir}>
+<html lang={locale} dir={dir} data-theme="dark">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
+		<meta name="color-scheme" content="dark light" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
+		<meta name="description" content={resolvedDescription} />
 		<meta property="og:locale" content={locale === "fa" ? "fa_IR" : "en_US"} />
 		<meta property="og:type" content="website" />
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
+		<meta property="og:title" content={resolvedTitle} />
+		<meta property="og:description" content={resolvedDescription} />
 		{canonical && <link rel="canonical" href={canonical} />}
 		{alternates.map((item) => <link rel="alternate" hreflang={item.hreflang} href={item.href} />)}
-		<title>{title}</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<title>{resolvedTitle}</title>
+		<script is:inline>
+			(() => {
+				const stored = localStorage.getItem("theme");
+				const theme = stored === "light" || stored === "dark" ? stored : "dark";
+				document.documentElement.setAttribute("data-theme", theme);
+			})();
+		</script>
 	</head>
 	<body>
 		<slot />
+		<script>
+			const root = document.documentElement;
+			const toggle = document.querySelector("[data-theme-toggle]");
+
+			const applyTheme = (theme) => {
+				root.setAttribute("data-theme", theme);
+				localStorage.setItem("theme", theme);
+			};
+
+			toggle?.addEventListener("click", () => {
+				const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+				applyTheme(next);
+			});
+		</script>
 	</body>
 </html>

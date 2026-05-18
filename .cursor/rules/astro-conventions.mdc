@@ -1,0 +1,33 @@
+---
+description: Astro file naming and split-file patterns for this project
+alwaysApply: true
+---
+
+# Astro Conventions
+
+## Naming
+
+- Components: `PascalCase.astro` (e.g. `HeroSection.astro`).
+- Split files: same base name + suffix:
+  - `HeroSection.styles.astro`
+  - `HeroSection.scripts.astro`
+- Content modules: `kebab-case.ts` or feature name (`hero.ts`, `toolbar.ts`) under `src/assets/contents/`.
+- Constants: `UPPER_SNAKE_CASE` (`SOCIAL_LINKS`, `HERO_CONTENT`).
+- CSS classes: `kebab-case`, BEM-style blocks for complex UI (`popup-modal__panel`).
+
+## When to split styles/scripts
+
+- **≤10 lines:** keep inline in the main `.astro` file.
+- **>10 lines:** extract to `.styles.astro` / `.scripts.astro` and import as components.
+- Critical init scripts (e.g. theme flash prevention) may stay as `is:inline` in `Layout.astro` `<head>`.
+
+## i18n
+
+- Routes: `/en/...`, `/fa/...`; `lang` param type from `src/i18n/config.ts`.
+- `Layout` receives `locale`; pass `lang` to sections and `getContent()` bundles.
+
+## Do not
+
+- Inline locale strings in `.astro` templates.
+- Use raw `<a>` where `Link` / `SocialLink` / `Button` applies.
+- Scope styles in a split file that only apply to elements rendered by a different component.

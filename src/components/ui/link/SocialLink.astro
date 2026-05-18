@@ -1,0 +1,17 @@
+---
+import Link from "./Link.astro";
+import Icon from "../icon/Icon.astro";
+
+interface Props {
+  href: string;
+  icon: string;
+  label: string;
+}
+
+const { href, icon, label } = Astro.props;
+const isEmail = label === "Email";
+---
+
+<Link href={href} variant="social" ariaLabel={label} external={!isEmail}>
+  <Icon name={icon} class="social-link__icon" />
+</Link>

@@ -1,36 +1,38 @@
 ---
+import Icon from "../icon/Icon.astro";
+import { POPUP_CONTENT } from "../../../assets/contents/common/popup";
+import { getContent } from "../../../lib/content/ui-text";
+import type { Locale } from "../../../i18n/config";
+import PopupStyles from "./Popup.styles.astro";
+import PopupScripts from "./Popup.scripts.astro";
+
 interface Props {
   id: string;
   title: string;
+  locale?: Locale;
 }
 
-const { id, title } = Astro.props;
+const { id, title, locale = "en" } = Astro.props;
+const content = getContent(POPUP_CONTENT, locale);
+const titleId = `${id}-title`;
 ---
 
-<dialog id={id} class="w-[min(34rem,90vw)] rounded-lg border border-[var(--color-border)] p-0 backdrop:bg-black/40">
-  <div class="p-5">
-    <div class="mb-3 flex items-center justify-between">
-      <h3 class="text-xl font-semibold">{title}</h3>
-      <button type="button" data-close-popup={id} class="rounded px-2 py-1 text-sm hover:bg-gray-100">Close</button>
+<dialog id={id} class="popup-modal" aria-labelledby={titleId}>
+  <div class="popup-modal__panel" role="document">
+    <header class="popup-modal__header">
+      <h2 id={titleId} class="popup-modal__title">{title}</h2>
+      <button type="button" class="popup-modal__close" data-close-popup={id} aria-label={content.close}>
+        <Icon name="close" class="popup-modal__close-icon" />
+      </button>
+    </header>
+    <div class="popup-modal__body">
+      <slot />
     </div>
-    <slot />
+    <footer class="popup-modal__footer">
+      <slot name="footer" />
+    </footer>
   </div>
 </dialog>
 
-<script>
-  document.querySelectorAll("[data-open-popup]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const id = button.getAttribute("data-open-popup");
-      const dialog = id ? document.getElementById(id) : null;
-      if (dialog && dialog instanceof HTMLDialogElement) dialog.showModal();
-    });
-  });
-
-  document.querySelectorAll("[data-close-popup]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const id = button.getAttribute("data-close-popup");
-      const dialog = id ? document.getElementById(id) : null;
-      if (dialog && dialog instanceof HTMLDialogElement) dialog.close();
-    });
-  });
-</script>
+<PopupStyles />
+<PopupScripts />

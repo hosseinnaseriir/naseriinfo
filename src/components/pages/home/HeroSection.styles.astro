@@ -1,0 +1,142 @@
+<style is:global>
+  .hero-avatar {
+    position: relative;
+    flex-shrink: 0;
+    width: 4.75rem;
+    height: 2rem;
+    margin-inline-end: 1rem;
+    overflow: visible;
+  }
+
+  .hero-avatar__ring {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border: 1px solid var(--color-border);
+    top: -30px;
+    top: 0;
+    background: transparent;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .hero-avatar__image {
+    position: absolute;
+    left: 40px;
+    top: -11.5px;
+    z-index: 2;
+    border-radius: 2px;
+    width: 5rem;
+    height: auto;
+    max-width: none;
+    object-fit: contain;
+    object-position: top center;
+    transform: translate(-50%, -42%);
+    pointer-events: none;
+  }
+
+  .hero-banner {
+    background: linear-gradient(145deg, color-mix(in srgb, var(--color-primary) 8%, var(--color-surface)), var(--color-surface));
+  }
+
+  .hero-subheadline,
+  .hero-typewriter {
+    white-space: pre-line;
+  }
+
+  .hero-typewriter::after {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    height: 0.9em;
+    margin-inline-start: 2px;
+    vertical-align: -0.05em;
+    background: var(--color-primary);
+    animation: hero-cursor 0.9s step-end infinite;
+  }
+
+  .hero-typewriter.is-done::after {
+    opacity: 0;
+    animation: none;
+  }
+
+  @keyframes hero-cursor {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .hero-profile-role {
+    overflow: hidden;
+  }
+
+  .hero-profile-role__text {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @keyframes hero-role-marquee {
+    0%,
+    18% {
+      transform: translateX(0);
+    }
+
+    42%,
+    58% {
+      transform: translateX(var(--marquee-distance, 0));
+    }
+
+    82%,
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-top {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hero-top__profile {
+      width: 100%;
+    }
+
+    .hero-profile-role__text {
+      display: inline-block;
+      overflow: visible;
+      text-overflow: clip;
+    }
+
+    .hero-profile-role.is-marquee .hero-profile-role__text {
+      animation: hero-role-marquee 10s ease-in-out infinite;
+    }
+
+    .hero-top__social {
+      width: 100%;
+      gap: 0.625rem;
+    }
+
+    .hero-top__social .social-link {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .hero-top__social .social-link__icon {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .hero-banner__actions .hero-banner__read-articles {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-profile-role.is-marquee .hero-profile-role__text {
+      animation: none;
+    }
+  }
+</style>

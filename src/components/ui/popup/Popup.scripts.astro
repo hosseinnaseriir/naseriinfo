@@ -1,0 +1,36 @@
+<script>
+  const initPopups = () => {
+    document.querySelectorAll("[data-open-popup]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const id = button.getAttribute("data-open-popup");
+        const dialog = id ? document.getElementById(id) : null;
+        if (dialog instanceof HTMLDialogElement) {
+          dialog.showModal();
+        }
+      });
+    });
+
+    document.querySelectorAll("[data-close-popup]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const id = button.getAttribute("data-close-popup");
+        const dialog = id ? document.getElementById(id) : null;
+        if (dialog instanceof HTMLDialogElement) {
+          dialog.close();
+        }
+      });
+    });
+
+    document.querySelectorAll(".popup-modal").forEach((dialog) => {
+      if (!(dialog instanceof HTMLDialogElement)) return;
+
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) {
+          dialog.close();
+        }
+      });
+    });
+  };
+
+  initPopups();
+  document.addEventListener("astro:page-load", initPopups);
+</script>

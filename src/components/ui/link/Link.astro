@@ -1,0 +1,42 @@
+---
+interface Props {
+  href: string;
+  variant?: "default" | "social" | "toolbar" | "card" | "unstyled";
+  external?: boolean;
+  ariaLabel?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  variant = "default",
+  external,
+  ariaLabel,
+  class: className = "",
+  ...rest
+} = Astro.props;
+
+const isMailto = href.startsWith("mailto:");
+const isHttp = href.startsWith("http");
+const openInNewTab = !isMailto && (external ?? isHttp);
+
+const variants = {
+  default: "link-default",
+  social: "social-link",
+  toolbar: "toolbar-btn",
+  card: "link-card",
+  unstyled: ""
+};
+---
+
+<a
+  href={href}
+  class={`${variants[variant]} ${className}`.trim()}
+  target={openInNewTab ? "_blank" : undefined}
+  rel={openInNewTab ? "noopener noreferrer" : undefined}
+  aria-label={ariaLabel}
+  {...rest}
+>
+  <slot />
+</a>

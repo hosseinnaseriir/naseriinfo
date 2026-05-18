@@ -1,0 +1,43 @@
+<script>
+  function initProfileRoleMarquee() {
+    const wrap = document.querySelector<HTMLElement>(".hero-profile-role");
+    const text = document.querySelector<HTMLElement>(".hero-profile-role__text");
+    if (!wrap || !text) return;
+
+    wrap.classList.remove("is-marquee");
+    wrap.style.removeProperty("--marquee-distance");
+
+    if (!window.matchMedia("(max-width: 767px)").matches) return;
+
+    const overflow = text.scrollWidth - wrap.clientWidth;
+    if (overflow <= 4) return;
+
+    const isRtl = document.documentElement.dir === "rtl";
+    wrap.style.setProperty("--marquee-distance", isRtl ? `${overflow}px` : `-${overflow}px`);
+    wrap.classList.add("is-marquee");
+  }
+
+  initProfileRoleMarquee();
+  window.addEventListener("resize", initProfileRoleMarquee);
+
+  const title = document.querySelector<HTMLElement>(".hero-typewriter");
+  if (title) {
+    const raw = title.getAttribute("data-text") ?? '""';
+    const fullText = JSON.parse(raw) as string;
+    let index = 0;
+    const speed = title.closest("[dir='rtl']") ? 55 : 45;
+
+    const type = () => {
+      if (index <= fullText.length) {
+        title.textContent = fullText.slice(0, index);
+        index += 1;
+        window.setTimeout(type, speed);
+        return;
+      }
+      title.classList.add("is-done");
+    };
+
+    title.textContent = "";
+    type();
+  }
+</script>

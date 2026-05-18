@@ -1,11 +1,29 @@
 ---
-description: Content source architecture for markdown today and CMS tomorrow
+description: UI copy, constants, and content source architecture
 alwaysApply: true
 ---
 
 # Content Architecture
 
-- Use adapter modules in `src/lib/content` to read data.
+## UI text (`src/assets/contents/`)
+
+- Store all user-facing strings in TypeScript modules under `src/assets/contents/`, not inline in `.astro` files.
+- Organize by scope:
+  - `common/` — shared UI (toolbar, layout defaults, popup labels)
+  - `pages/<page>/` — page- or section-specific copy (e.g. `pages/home/hero.ts`)
+- Export locale bundles as `UPPER_SNAKE_CASE` constants (e.g. `HERO_CONTENT`, `TOOLBAR_CONTENT`).
+- Use `satisfies LocalizedContent<T>` for type-safe `en` / `fa` shapes.
+- Resolve copy with `getContent(BUNDLE, locale)` from `src/lib/content/ui-text.ts`.
+- Pass `lang: Locale` (not `isFa`) into components; derive locale-specific strings inside the component or page.
+
+## Config & static data
+
+- URLs, social link lists, and non-translated config use `UPPER_SNAKE_CASE` (e.g. `SOCIAL_LINKS`, `HERO_VIDEO`).
+- Keep them in the same content module as related copy when they belong to one feature.
+
+## Long-form content
+
+- Use adapter modules in `src/lib/content` to read article/CMS data.
 - Pages and cards consume adapter output, not raw collection APIs directly.
 - Keep article shape stable: `slug`, `title`, `excerpt`, `publishedAt`, `coverImage`, `tags`.
 - Store local content in Astro collections under `src/content`.

@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "./tokens.css";
+@import "./typography.css";
 @import "./utilities.css";
+@import "./links.css";
+@import "./components.css";
 
 *,
 *::before,
@@ -14,11 +17,18 @@ body {
   min-height: 100%;
 }
 
+html[lang="en"] body {
+  font-family: "Raleway", "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+html[lang="fa"] body {
+  font-family: "Vazirmatn", "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
 body {
-  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
   background: var(--color-bg);
   color: var(--color-text);
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 a {
@@ -29,4 +39,14 @@ button,
 input,
 textarea {
   font: inherit;
+}
+
+.icon {
+  display: inline-flex;
+  line-height: 0;
+}
+
+.icon svg {
+  width: 1em;
+  height: 1em;
 }

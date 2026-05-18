@@ -1,13 +1,31 @@
 ---
-description: MD3-inspired design tokens and accessibility rules
+description: MD3-inspired tokens, typography, themes, and shared styles
 alwaysApply: true
 ---
 
 # Design System Rules
 
 - Follow Material Design 3 principles: clear hierarchy, consistent spacing, accessible interactions.
-- Use design tokens from `src/styles/tokens.css`; avoid hardcoded colors, spacing, and radius values.
-- Keep component APIs semantic and minimal (`variant`, `size`, `tone`).
-- Ensure focus-visible styles exist for interactive elements.
-- Keep typography to system variants only: `headline`, `body1`, `body2`, `button`, `caption`.
-- Prefer composition with layout primitives (`Container`, `Flex`, `Stack`) before custom wrappers.
+- Use design tokens from `src/styles/tokens.css`; avoid hardcoded colors, spacing, radius, and shadows.
+- Shadow scale: `--shadow-sm`, `--shadow-md`, `--shadow-lg`, `--shadow-xl` (derived from `--color-overlay`).
+- Overlays/backdrops: `--color-overlay`, `--color-backdrop` (never raw `rgb()` in components).
+- Dark mode is default (`data-theme="dark"`); light mode via `[data-theme="light"]`.
+- Theme toggle and language switch live in `SiteToolbar` (fixed, top inline-end).
+
+## Typography
+
+- Variants only: `headline`, `body1`, `body2`, `button`, `caption` via `Typography.astro`.
+- **English:** Raleway (`html[lang="en"]`).
+- **Farsi:** Vazirmatn (`html[lang="fa"]`).
+
+## Shared CSS
+
+- Global entry: `src/styles/global.css` imports `tokens.css`, `utilities.css`, `links.css`, `components.css`.
+- Put cross-component UI (toolbar, social links, modals) in `components.css`, not duplicated in scoped component styles.
+- Component-specific layout/animation may stay in `ComponentName.styles.astro` with `is:global` when it must affect slotted or child markup.
+
+## Interactive UI
+
+- Ensure `focus-visible` styles on buttons and links.
+- Modals use native `<dialog>` + `showModal()`; center with flex on the dialog, panel inside `.popup-modal__panel`.
+- Prefer composition with layout primitives before custom wrappers.

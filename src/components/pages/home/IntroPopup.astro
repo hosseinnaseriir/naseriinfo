@@ -1,0 +1,48 @@
+---
+import Popup from "../../ui/popup/Popup.astro";
+import Typography from "../../ui/typography/Typography.astro";
+import Button from "../../ui/button/Button.astro";
+import Flex from "../../ui/layout/Flex.astro";
+import IntroTechMarquee from "./IntroTechMarquee.astro";
+import IntroPopupStyles from "./IntroPopup.styles.astro";
+import { INTRO_CONTENT } from "../../../assets/contents/pages/home/intro";
+import { INTRO_TECH_STACK } from "../../../assets/contents/pages/home/intro-tech";
+import { HERO_CONTENT } from "../../../assets/contents/pages/home/hero";
+import { getContent } from "../../../lib/content/ui-text";
+import type { Locale } from "../../../i18n/config";
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props as Props;
+const content = getContent(INTRO_CONTENT, lang);
+const heroContent = getContent(HERO_CONTENT, lang);
+---
+
+<Popup id="intro-popup" title={content.title} locale={lang}>
+  <div class="intro-popup__content">
+    <Typography as="p" variant="body2" class="intro-popup__highlight">
+      <strong>{content.experienceHighlight}</strong>
+      {content.experienceFocus}
+    </Typography>
+
+    <ul class="intro-popup__list">
+      {content.experienceItems.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
+  </div>
+
+  <div slot="footer" class="intro-popup__footer">
+    <IntroTechMarquee items={INTRO_TECH_STACK} label={content.techMarqueeLabel} />
+  
+    <Flex gap="sm" class="popup-modal__footer-actions mt-5 md:mt-0">
+      <Button variant="primary">{heroContent.bookCall}</Button>
+      <Button href={`/${lang}/articles`} variant="secondary">{heroContent.readArticles}</Button>
+    </Flex>
+
+  </div>
+</Popup>
+
+<IntroPopupStyles />
