@@ -9,11 +9,11 @@ interface Props {
 const { as = "p", variant = "body1", class: className = "", ...rest } = Astro.props as Props;
 const Tag = as;
 const classes = {
-  headline: "typography--headline",
-  body1: "typography--body1",
-  body2: "typography--body2",
-  button: "typography--button",
-  caption: "typography--caption"
+  headline: "text-xl font-semibold tracking-tight leading-snug text-text md:text-3xl",
+  body1: "text-lg leading-normal text-text",
+  body2: "text-sm leading-relaxed text-text-muted md:text-base md:leading-normal",
+  button: "text-[0.95rem] font-medium text-text",
+  caption: "text-sm leading-snug text-text-muted"
 };
 ---
 

@@ -9,6 +9,6 @@ const { src, alt, caption } = Astro.props as Props;
 ---
 
 <figure class="my-6 space-y-2">
-  <img src={src} alt={alt} loading="lazy" class="surface w-full object-cover" />
-  {caption && <figcaption class="text-sm text-[var(--color-text-muted)]">{caption}</figcaption>}
+  <img src={src} alt={alt} loading="lazy" class="w-full rounded-md border border-border bg-surface object-cover" />
+  {caption && <figcaption class="text-sm text-text-muted">{caption}</figcaption>}
 </figure>

@@ -2,17 +2,17 @@
   .intro-popup__content {
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
+    gap: var(--spacing-4);
   }
 
   .intro-popup__highlight {
     margin: 0;
-    color: var(--color-text);
+    color: var(--token-text);
     line-height: 1.55;
   }
 
   .intro-popup__highlight strong {
-    color: var(--color-primary);
+    color: var(--token-primary);
     font-weight: 700;
   }
 
@@ -22,31 +22,31 @@
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2) var(--space-3);
+    gap: var(--spacing-2) var(--spacing-3);
     line-height: 1.5;
   }
 
   .intro-popup__list li {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
-    color: var(--color-text-muted);
+    gap: var(--spacing-2);
+    color: var(--token-text-muted);
   }
 
   .intro-popup__list li:not(:last-child)::after {
     content: "•";
-    color: color-mix(in srgb, var(--color-text-muted) 55%, transparent);
-    margin-inline-start: var(--space-1);
+    color: color-mix(in srgb, var(--token-text-muted) 55%, transparent);
+    margin-inline-start: var(--spacing-1);
   }
 
   .intro-popup__tech {
     overflow: hidden;
-    margin: 0 calc(var(--space-5) * -1);
+    margin: 0 calc(var(--spacing-5) * -1);
     mask-image: linear-gradient(
       90deg,
       transparent,
-      var(--color-text) 10%,
-      var(--color-text) 90%,
+      var(--token-text) 10%,
+      var(--token-text) 90%,
       transparent
     );
   }
@@ -57,12 +57,20 @@
     animation: intro-tech-marquee 55s linear infinite;
   }
 
+  html[dir="rtl"] .intro-popup__tech-track {
+    animation-name: intro-tech-marquee-rtl;
+  }
+
   .intro-popup__tech-group {
     display: flex;
     align-items: center;
-    gap: var(--space-5);
+    gap: var(--spacing-5);
     flex-shrink: 0;
-    opacity: .25;
+    opacity: 0.25;
+  }
+
+  html[data-theme="dark"] .intro-popup__tech-group {
+    opacity: 0.45;
   }
 
   .intro-popup__tech-item {
@@ -72,12 +80,13 @@
     flex-shrink: 0;
     width: 1.1rem;
     height: 1.1rem;
-    color: var(--color-text-muted);
-    transition: color 0.15s ease;
+    color: var(--token-text-muted);
+    transition: color 0.15s ease, opacity 0.15s ease;
   }
 
   .intro-popup__tech-item:hover {
-    color: var(--color-primary);
+    color: var(--token-primary);
+    opacity: 1;
   }
 
   .intro-popup__tech-icon {
@@ -91,51 +100,22 @@
     height: 100%;
   }
 
-  @keyframes intro-tech-marquee {
-    from {
-      transform: translateX(0);
-    }
-
-    to {
-      transform: translateX(-50%);
-    }
+  /* Brand SVGs use hardcoded fills — map to theme via monochrome filter */
+  .intro-popup__tech-icon svg:not([fill="currentColor"]) {
+    filter: brightness(0);
+    transition: filter 0.15s ease, opacity 0.15s ease;
   }
 
-  html[dir="rtl"] .intro-popup__tech-track {
-    animation-name: intro-tech-marquee-rtl;
+  html[data-theme="dark"] .intro-popup__tech-icon svg:not([fill="currentColor"]) {
+    filter: brightness(0) invert(1);
   }
 
-  @keyframes intro-tech-marquee-rtl {
-    from {
-      transform: translateX(0);
-    }
-
-    to {
-      transform: translateX(50%);
-    }
+  .intro-popup__tech-item:hover .intro-popup__tech-icon svg:not([fill="currentColor"]) {
+    filter: brightness(0) sepia(1) saturate(4) hue-rotate(220deg);
+    opacity: 1;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .intro-popup__tech-track {
-      animation: none;
-      flex-wrap: wrap;
-      width: 100%;
-      justify-content: center;
-      gap: var(--space-3);
-    }
-
-    .intro-popup__tech-group[aria-hidden="true"] {
-      display: none;
-    }
-
-    .intro-popup__tech-group {
-      flex-wrap: wrap;
-      justify-content: center;
-      padding-inline: var(--space-3);
-    }
-
-    .intro-popup__tech {
-      mask-image: none;
-    }
+  html[data-theme="dark"] .intro-popup__tech-item:hover .intro-popup__tech-icon svg:not([fill="currentColor"]) {
+    filter: brightness(0) invert(1) sepia(1) saturate(4) hue-rotate(220deg);
   }
 </style>

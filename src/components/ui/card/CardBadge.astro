@@ -17,11 +17,22 @@ const {
   class: className = ""
 } = Astro.props as Props;
 
+const toneClasses: Record<CardBadgeTone, string> = {
+  success: "border-success/35 bg-success/10 text-success-muted",
+  primary: "border-primary/35 bg-primary/10 text-primary",
+  neutral: "border-border bg-text-muted/10 text-text-muted"
+};
+
+const dotClasses: Record<CardBadgeTone, string> = {
+  success: "bg-success",
+  primary: "bg-primary",
+  neutral: "bg-text-muted"
+};
+
 const classes = [
-  "card-badge",
-  `card-badge--${tone}`,
-  pulse ? "card-badge--pulse" : "",
-  hideLabelOnMobile ? "card-badge--hide-label-mobile" : "",
+  "absolute top-3 end-3 z-1 inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[0.7rem] font-semibold leading-tight tracking-wide",
+  toneClasses[tone],
+  hideLabelOnMobile ? "max-md:p-1.5 max-md:[&_.card-badge__label]:hidden" : "",
   className
 ]
   .filter(Boolean)
@@ -29,6 +40,9 @@ const classes = [
 ---
 
 <span class={classes} aria-label={hideLabelOnMobile ? accessibleLabel : undefined}>
-  <span class="card-badge__dot" aria-hidden="true"></span>
+  <span
+    class:list={["card-badge__dot size-[0.45rem] rounded-full", dotClasses[tone], pulse && "animate-card-badge-pulse"]}
+    aria-hidden="true"
+  ></span>
   <span class="card-badge__label"><slot /></span>
 </span>

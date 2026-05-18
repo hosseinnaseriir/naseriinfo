@@ -18,14 +18,20 @@ const alternatePath = path.replace(/^\/(en|fa)/, `/${alternateLocale}`) || `/${a
 const alternateLabel = localeConfig[alternateLocale].label;
 ---
 
-<div class:list={[ "site-toolbar", variant === "anchored" && "site-toolbar--anchored", variant === "fixed" && "site-toolbar--fixed"]}>
+<div
+  class:list={[
+    "flex items-center gap-1",
+    variant === "anchored" && "self-start m-0",
+    variant === "fixed" && "fixed top-3 end-3 z-50"
+  ]}
+>
   <button type="button" class="toolbar-btn" data-theme-toggle aria-label={content.themeToggle}>
-    <Icon name="sun" class="toolbar-icon theme-icon-light" />
-    <Icon name="moon" class="toolbar-icon theme-icon-dark" />
+    <Icon name="sun" class="toolbar-icon hidden dark:inline-flex" />
+    <Icon name="moon" class="toolbar-icon hidden light:inline-flex" />
   </button>
 
   <Link href={alternatePath} variant="toolbar" ariaLabel={content.switchTo(alternateLabel)} external={false}>
     <Icon name="language" class="toolbar-icon" />
-    <span class="toolbar-lang">{alternateLocale.toUpperCase()}</span>
+    <span class="text-[0.7rem] font-semibold tracking-wide">{alternateLocale.toUpperCase()}</span>
   </Link>
 </div>

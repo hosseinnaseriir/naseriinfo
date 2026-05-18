@@ -16,14 +16,17 @@ const { title, description, icon, ctaLabel, ctaHref } = Astro.props;
 ---
 
 <Card as="article">
-  <CardContent class="service-card__inner">
-    <div class="service-card__icon-wrap" aria-hidden="true">
-      <Icon name={icon} class="service-card__icon" />
+  <CardContent class="relative flex items-start gap-4">
+    <div
+      class="inline-flex size-12 shrink-0 items-center justify-center rounded-lg border border-primary/25 bg-gradient-to-br from-primary/28 to-primary/8 text-primary"
+      aria-hidden="true"
+    >
+      <Icon name={icon} class="inline-flex size-6 [&_svg]:size-full" />
     </div>
 
-    <div class="service-card__body">
-      <h3 class="service-card__title">{title}</h3>
-      <p class="service-card__description">{description}</p>
+    <div class="min-w-0">
+      <h3 class="m-0 text-lg font-semibold leading-snug text-text">{title}</h3>
+      <p class="mt-2 text-sm leading-relaxed text-text-muted md:text-base">{description}</p>
       <Link href={ctaHref} variant="unstyled" class="service-card__cta">
         {ctaLabel}
       </Link>

@@ -1,5 +1,5 @@
 ---
-description: Component architecture, links, and file organization
+description: Component architecture, links, Tailwind-first styling, and file organization
 alwaysApply: true
 ---
 
@@ -27,16 +27,41 @@ alwaysApply: true
 - SVGs live in `src/assets/icons/` (descriptive names: `close.svg`, `github.svg`).
 - Render via `Icon.astro` (`name` matches filename without extension).
 
-## Styles & scripts
+## Styling (Tailwind-first)
 
-- If a component has **more than 10 lines** of `<style>` or `<script>`, split into sibling files:
-  - `ComponentName.styles.astro`
-  - `ComponentName.scripts.astro`
-- Import and render them at the bottom of the main component: `<ComponentNameStyles />`, `<ComponentNameScripts />`.
-- Styles that target classes on **child** components (e.g. `Link`, `SocialLink`) must be **global**:
-  - Prefer `src/styles/components.css` for shared patterns (toolbar, social links, modals), or
-  - Use `<style is:global>` in the `.styles.astro` file.
-- Do **not** rely on scoped styles in an empty `.styles.astro` wrapper for classes applied in other components.
+**Default:** add and edit styles via Tailwind `class` strings using theme utilities (`bg-surface`, `text-text-muted`, `gap-4`, `md:p-5`, `transition-colors duration-150`).
+
+### Do
+
+- Use `surface` for bordered panels, or equivalent utilities on the element.
+- Use semantic colors from theme (`text-primary`, `border-border`) — not `#hex` or `var(--color-primary)` in `.astro` files.
+- Use `bg-gradient-to-br` for gradients (with `from-primary/10`, etc.).
+- Include transition duration when adding hover/focus states (`duration-200 ease-in-out`).
+- Keep `Card.astro`, `Button.astro`, `Link.astro`, `Typography.astro` as the source of variant styling.
+
+### Do not
+
+- Add new global CSS files or revive `components.css` / per-feature stylesheets for layout that utilities can handle.
+- Use invalid utilities (`bg-linear-to-br`, `max-w-container`).
+- Duplicate token values inline when a theme utility exists.
+- Put long `<style>` blocks in main `.astro` files when Tailwind classes suffice.
+- Keep legacy BEM class names (e.g. `services-section__grid`) unless a stylesheet or script selects them — prefer Tailwind utilities only.
+
+### Custom CSS (exceptions only)
+
+Use `ComponentName.styles.astro` with `<style is:global>` or `src/styles/motion.css` when Tailwind cannot:
+
+- Keyframes and `prefers-reduced-motion`
+- `dialog::backdrop`
+- JS-driven animation (`--marquee-distance`, typewriter caret)
+- `::after` content that must flip for RTL globally
+
+Import at the bottom: `<ComponentNameStyles />` only when needed.
+
+### Scripts
+
+- If a component has **more than 10 lines** of `<script>`, split into `ComponentName.scripts.astro`.
+- Import: `<ComponentNameScripts />` at the bottom of the main component.
 
 ## Accessibility
 

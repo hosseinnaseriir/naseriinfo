@@ -22,10 +22,11 @@ const isHttp = href.startsWith("http");
 const openInNewTab = !isMailto && (external ?? isHttp);
 
 const variants = {
-  default: "link-default",
-  social: "social-link",
-  toolbar: "toolbar-btn",
-  card: "link-card",
+  default: "text-inherit no-underline",
+  social:
+    "social-link inline-flex size-9 items-center justify-center rounded-sm text-text-muted no-underline transition-[color,background-color] duration-150 ease-in-out hover:bg-primary/10 hover:text-primary",
+  toolbar: "toolbar-btn no-underline",
+  card: "block text-inherit no-underline transition-colors duration-150 hover:text-primary",
   unstyled: ""
 };
 ---

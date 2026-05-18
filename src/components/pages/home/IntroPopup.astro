@@ -34,14 +34,13 @@ const heroContent = getContent(HERO_CONTENT, lang);
     </ul>
   </div>
 
-  <div slot="footer" class="intro-popup__footer">
+  <div slot="footer">
     <IntroTechMarquee items={INTRO_TECH_STACK} label={content.techMarqueeLabel} />
-  
+
     <Flex gap="sm" class="popup-modal__footer-actions mt-5 md:mt-0">
       <Button variant="primary">{heroContent.bookCall}</Button>
       <Button href={`/${lang}/articles`} variant="secondary">{heroContent.readArticles}</Button>
     </Flex>
-
   </div>
 </Popup>
 

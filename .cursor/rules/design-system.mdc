@@ -1,31 +1,69 @@
 ---
-description: MD3-inspired tokens, typography, themes, and shared styles
+description: Tailwind-first MD3 design tokens, typography, themes, and styling rules
 alwaysApply: true
 ---
 
 # Design System Rules
 
-- Follow Material Design 3 principles: clear hierarchy, consistent spacing, accessible interactions.
-- Use design tokens from `src/styles/tokens.css`; avoid hardcoded colors, spacing, radius, and shadows.
-- Shadow scale: `--shadow-sm`, `--shadow-md`, `--shadow-lg`, `--shadow-xl` (derived from `--color-overlay`).
-- Overlays/backdrops: `--color-overlay`, `--color-backdrop` (never raw `rgb()` in components).
-- Dark mode is default (`data-theme="dark"`); light mode via `[data-theme="light"]`.
-- Theme toggle and language switch live in `SiteToolbar` (fixed, top inline-end).
+This project is **Tailwind-first**. Default to utility classes on components; add custom CSS only when Tailwind cannot express the behavior.
+
+## Styling approach (required)
+
+1. **Tailwind utilities first** — layout, spacing, color, typography, borders, shadows, transitions, and responsive behavior go in `class` attributes.
+2. **Theme tokens** — colors and spacing come from `src/styles/theme.css` (`@theme` + `--token-*`). Use semantic utilities, not hardcoded hex or raw `var(--color-*)` in components.
+3. **Shared component classes sparingly** — only in `src/styles/global.css` `@layer components` when the same pattern is reused and awkward as utilities (e.g. `.surface`, `.service-card__cta` with RTL `::after`).
+4. **Custom CSS last** — keyframes, `dialog::backdrop`, `prefers-reduced-motion`, JS-driven marquee distance, and pixel-perfect hero avatar positioning. Put shared keyframes in `src/styles/motion.css`; page-specific rules in `ComponentName.styles.astro` with `<style is:global>`.
+
+Do **not** recreate removed files (`components.css`, `tokens.css`, `typography.css`, `links.css`, `utilities.css`).
+
+## Theme & tokens (`src/styles/theme.css`)
+
+- Runtime palette switches on `<html data-theme="dark|light">` via `--token-*` variables.
+- `@theme` maps tokens to Tailwind utilities: `bg-bg`, `bg-surface`, `text-text`, `text-text-muted`, `border-border`, `text-primary`, `bg-hover`, `shadow-md`, etc.
+- Layout width: `--container-max: 77.5rem` — use `max-w-[var(--container-max)]` on `Container.astro` (do not use `max-w-container`; it is not generated).
+- Theme variants: `dark:` and `light:` (custom variants on `[data-theme]`). Example: theme toggle icons `hidden dark:inline-flex` / `hidden light:inline-flex`.
+- Spacing scale: `--spacing-1` … `--spacing-8` → `p-4`, `gap-5`, `mt-4`, etc.
+
+## Global CSS (`src/styles/global.css`)
+
+Imports: `tailwindcss` → `theme.css` → `motion.css`.
+
+- `@layer base` — resets, body `bg-bg text-text`, locale fonts.
+- `@layer components` — `.surface`, `.icon`, and other small shared patterns built with `@apply`.
 
 ## Typography
 
-- Variants only: `headline`, `body1`, `body2`, `button`, `caption` via `Typography.astro`.
+- Use `Typography.astro` variants only: `headline`, `body1`, `body2`, `button`, `caption` (Tailwind inside the component).
 - **English:** Raleway (`html[lang="en"]`).
 - **Farsi:** Vazirmatn (`html[lang="fa"]`).
 
-## Shared CSS
+## Common patterns
 
-- Global entry: `src/styles/global.css` imports `tokens.css`, `utilities.css`, `links.css`, `components.css`.
-- Put cross-component UI (toolbar, social links, modals) in `components.css`, not duplicated in scoped component styles.
-- Component-specific layout/animation may stay in `ComponentName.styles.astro` with `is:global` when it must affect slotted or child markup.
+| Need | Prefer |
+|------|--------|
+| Panel / card chrome | `surface` class or `rounded-md border border-border bg-surface` |
+| Page width | `Container` (`max-w-[var(--container-max)]`) |
+| Card hover | `transition-[border-color,box-shadow,transform] duration-200`, `before:bg-gradient-to-br`, `hover:-translate-y-0.5 hover:shadow-md` |
+| Gradients | `bg-gradient-to-br` (never `bg-linear-to-br`) |
+| Focus rings | `focus-visible:ring-2 focus-visible:ring-primary/50` |
+| RTL arrow on CTA | `rtl:after:content-['←']` or `.service-card__cta` in global.css |
+
+## When custom CSS is allowed
+
+- `@keyframes` and animation names referenced from `@theme` (`--animate-*`)
+- `prefers-reduced-motion` overrides (`motion.css`)
+- Native `dialog::backdrop`
+- Pseudo-elements tied to JS state (typewriter caret, marquee with `--marquee-distance`)
+- Complex absolute positioning that is brittle as utilities (hero avatar — keep in `HeroSection.styles.astro`)
+
+## MD3 & theme behavior
+
+- Clear hierarchy, consistent spacing, accessible interactions.
+- Dark mode default (`data-theme="dark"`); light via `[data-theme="light"]`.
+- Theme toggle and language switch in `SiteToolbar` (fixed, top inline-end).
 
 ## Interactive UI
 
-- Ensure `focus-visible` styles on buttons and links.
-- Modals use native `<dialog>` + `showModal()`; center with flex on the dialog, panel inside `.popup-modal__panel`.
-- Prefer composition with layout primitives before custom wrappers.
+- `focus-visible` on all buttons and links.
+- Modals: native `<dialog>` + `showModal()`; panel mostly Tailwind or `Popup.styles.astro`; backdrop in CSS only.
+- Prefer `Container`, `Flex`, `Stack` before ad-hoc wrappers.

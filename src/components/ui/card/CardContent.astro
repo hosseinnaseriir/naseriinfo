@@ -6,6 +6,6 @@ interface Props {
 const { class: className = "" } = Astro.props as Props;
 ---
 
-<div class={`card-content ${className}`.trim()}>
+<div class={`relative ${className}`.trim()}>
   <slot />
 </div>

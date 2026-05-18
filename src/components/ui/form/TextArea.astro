@@ -9,12 +9,11 @@ const { id, label, placeholder = "" } = Astro.props;
 ---
 
 <label for={id} class="flex flex-col gap-2">
-  <span class="text-sm text-[var(--color-text-muted)]">{label}</span>
+  <span class="text-sm text-text-muted">{label}</span>
   <textarea
     id={id}
     name={id}
-    rows={4}
     placeholder={placeholder}
-    class="rounded-md border border-[var(--color-border)] bg-white px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
+    class="min-h-28 rounded-md border border-border bg-surface px-3 py-2 text-text outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
   ></textarea>
 </label>

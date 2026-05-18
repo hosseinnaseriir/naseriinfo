@@ -4,11 +4,7 @@ import Typography from "../../ui/typography/Typography.astro";
 import Button from "../../ui/button/Button.astro";
 import SocialLink from "../../ui/link/SocialLink.astro";
 import SiteToolbar from "../../layout/SiteToolbar.astro";
-// import VideoEmbed from "../../ui/media/VideoEmbed.astro";
-import { HERO_CONTENT, 
-  // HERO_VIDEO, 
-  SOCIAL_LINKS } from "../../../assets/contents/pages/home/hero";
-// import { SPACING } from "../../../styles/tokens";
+import { HERO_CONTENT, SOCIAL_LINKS } from "../../../assets/contents/pages/home/hero";
 import { getContent } from "../../../lib/content/ui-text";
 import type { Locale } from "../../../i18n/config";
 import HeroSectionStyles from "./HeroSection.styles.astro";
@@ -23,10 +19,8 @@ const content = getContent(HERO_CONTENT, lang);
 const path = Astro.url.pathname;
 ---
 
-
 <SiteToolbar locale={lang} path={path} variant="anchored" />
 <section class="hero-section surface flex flex-col px-0 md:p-5">
-
   <Flex justify="between" align="center" gap="md" wrap={true} class="hero-top mb-2 md:mb-2">
     <Flex align="center" gap="sm" class="hero-top__profile min-w-0 flex-1 p-4 md:p-0">
       <div class="hero-avatar">
@@ -55,8 +49,8 @@ const path = Astro.url.pathname;
     </nav>
   </Flex>
 
-  <div class="hero-banner surface mb-1 md:mb-0 py-5 px-1 mx-1 md:mx-0 md:p-">
-    <div class="mx-auto md:px-2 text-center">
+  <div class="hero-banner surface mb-1 py-5 px-1 mx-1 md:mx-0 md:mb-0 md:p-5">
+    <div class="mx-auto text-center md:px-2">
       <Typography
         as="h2"
         variant="headline"
@@ -72,13 +66,6 @@ const path = Astro.url.pathname;
       </Flex>
     </div>
   </div>
-
-  <!-- <VideoEmbed
-    locale={lang}
-    title={content.videoTitle}
-    youtubeUrl={HERO_VIDEO.youtubeUrl}
-    aparatUrl={HERO_VIDEO.aparatUrl}
-  /> -->
 </section>
 
 <HeroSectionStyles />

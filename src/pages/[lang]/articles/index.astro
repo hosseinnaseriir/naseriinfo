@@ -34,7 +34,7 @@ const articles = await getArticles(lang);
         ))}
       </div>
     ) : (
-      <p class="surface p-4 text-[var(--color-text-muted)]">{content.empty}</p>
+      <p class="rounded-md border border-border bg-surface p-4 text-text-muted">{content.empty}</p>
     )}
   </Container>
 </Layout>

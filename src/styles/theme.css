@@ -1,0 +1,88 @@
+/* Runtime tokens (switch with data-theme on <html>) */
+:root,
+[data-theme="dark"] {
+  --container-max: 77.5rem;
+  --token-bg: #0c0a12;
+  --token-surface: #16131f;
+  --token-text: #f3effa;
+  --token-text-muted: #a89cb8;
+  --token-border: #2a2438;
+  --token-primary: #a78bfa;
+  --token-primary-contrast: #0c0a12;
+  --token-success: #22c55e;
+  --token-success-muted: #4ade80;
+  --token-hover: color-mix(in srgb, var(--token-surface) 85%, white);
+  --token-overlay: #000000;
+  --token-backdrop: color-mix(in srgb, var(--token-overlay) 38%, transparent);
+  --token-backdrop-blur: 6px;
+  --token-shadow-sm: 0 1px 2px color-mix(in srgb, var(--token-overlay) 14%, transparent);
+  --token-shadow-md: 0 4px 12px color-mix(in srgb, var(--token-overlay) 18%, transparent);
+  --token-shadow-lg: 0 12px 32px color-mix(in srgb, var(--token-overlay) 24%, transparent);
+  --token-shadow-xl: 0 24px 48px color-mix(in srgb, var(--token-overlay) 30%, transparent);
+}
+
+[data-theme="light"] {
+  --token-bg: #faf7ff;
+  --token-surface: #ffffff;
+  --token-text: #221a35;
+  --token-text-muted: #6f6585;
+  --token-border: #ddd4ee;
+  --token-primary: #7c3aed;
+  --token-primary-contrast: #ffffff;
+  --token-success: #16a34a;
+  --token-success-muted: #15803d;
+  --token-hover: #f5f3fa;
+  --token-overlay: #1a1428;
+  --token-backdrop: color-mix(in srgb, var(--token-overlay) 22%, transparent);
+  --token-backdrop-blur: 4px;
+  --token-shadow-sm: 0 1px 2px color-mix(in srgb, var(--token-overlay) 8%, transparent);
+  --token-shadow-md: 0 4px 12px color-mix(in srgb, var(--token-overlay) 10%, transparent);
+  --token-shadow-lg: 0 12px 32px color-mix(in srgb, var(--token-overlay) 14%, transparent);
+  --token-shadow-xl: 0 24px 48px color-mix(in srgb, var(--token-overlay) 18%, transparent);
+}
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+@theme {
+  --color-bg: var(--token-bg);
+  --color-surface: var(--token-surface);
+  --color-text: var(--token-text);
+  --color-text-muted: var(--token-text-muted);
+  --color-border: var(--token-border);
+  --color-primary: var(--token-primary);
+  --color-primary-contrast: var(--token-primary-contrast);
+  --color-success: var(--token-success);
+  --color-success-muted: var(--token-success-muted);
+  --color-hover: var(--token-hover);
+  --color-overlay: var(--token-overlay);
+  --color-backdrop: var(--token-backdrop);
+
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.5rem;
+  --spacing-6: 2rem;
+  --spacing-8: 3rem;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  --width-container: 77.5rem;
+
+  --shadow-sm: var(--token-shadow-sm);
+  --shadow-md: var(--token-shadow-md);
+  --shadow-lg: var(--token-shadow-lg);
+  --shadow-xl: var(--token-shadow-xl);
+
+  --blur-backdrop: var(--token-backdrop-blur);
+
+  --animate-card-badge-pulse: card-badge-pulse 2s ease-out infinite;
+  --animate-hero-cursor: hero-cursor 0.9s step-end infinite;
+  --animate-hero-role-marquee: hero-role-marquee 10s ease-in-out infinite;
+  --animate-intro-tech-marquee: intro-tech-marquee 55s linear infinite;
+  --animate-intro-tech-marquee-rtl: intro-tech-marquee-rtl 55s linear infinite;
+  --animate-popup-panel-in: popup-panel-in 0.22s ease-out;
+}

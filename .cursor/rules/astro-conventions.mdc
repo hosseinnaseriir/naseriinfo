@@ -1,5 +1,5 @@
 ---
-description: Astro file naming and split-file patterns for this project
+description: Astro file naming, Tailwind-first styling splits, and project patterns
 alwaysApply: true
 ---
 
@@ -9,16 +9,24 @@ alwaysApply: true
 
 - Components: `PascalCase.astro` (e.g. `HeroSection.astro`).
 - Split files: same base name + suffix:
-  - `HeroSection.styles.astro`
+  - `HeroSection.styles.astro` — **only** for CSS Tailwind cannot handle
   - `HeroSection.scripts.astro`
 - Content modules: `kebab-case.ts` or feature name (`hero.ts`, `toolbar.ts`) under `src/assets/contents/`.
 - Constants: `UPPER_SNAKE_CASE` (`SOCIAL_LINKS`, `HERO_CONTENT`).
-- CSS classes: `kebab-case`, BEM-style blocks for complex UI (`popup-modal__panel`).
+- CSS classes: `kebab-case`, BEM-style blocks when custom CSS is required (`hero-avatar__image`, `popup-modal__panel`).
 
-## When to split styles/scripts
+## Styling (Tailwind-first)
+
+- **Prefer** Tailwind classes on the element in the main `.astro` file.
+- **Do not** default to a `.styles.astro` file for layout, spacing, colors, or simple hover states.
+- Extract `ComponentName.styles.astro` only for exceptions (see `design-system.mdc`): animations, backdrop, marquee, hero avatar positioning, etc.
+- Styles that target classes on **child** components must be `is:global` in the `.styles.astro` file.
+- Do not rely on scoped styles in an empty `.styles.astro` wrapper for classes applied in other components.
+
+## When to split scripts
 
 - **≤10 lines:** keep inline in the main `.astro` file.
-- **>10 lines:** extract to `.styles.astro` / `.scripts.astro` and import as components.
+- **>10 lines:** extract to `.scripts.astro` and import as a component.
 - Critical init scripts (e.g. theme flash prevention) may stay as `is:inline` in `Layout.astro` `<head>`.
 
 ## i18n
@@ -30,4 +38,4 @@ alwaysApply: true
 
 - Inline locale strings in `.astro` templates.
 - Use raw `<a>` where `Link` / `SocialLink` / `Button` applies.
-- Scope styles in a split file that only apply to elements rendered by a different component.
+- Add non-Tailwind CSS for things utilities already cover (grid, flex, padding, borders, transitions).

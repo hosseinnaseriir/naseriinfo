@@ -17,8 +17,8 @@ const { title, excerpt, date, href } = Astro.props;
   <CardContent>
     <Link href={href} variant="card">
       <h3 class="text-xl font-semibold">{title}</h3>
-      <p class="text-sm text-[var(--color-text-muted)]">{date}</p>
-      <p class="text-base text-[var(--color-text)]">{excerpt}</p>
+      <p class="text-sm text-text-muted">{date}</p>
+      <p class="text-base text-text">{excerpt}</p>
     </Link>
   </CardContent>
 </Card>

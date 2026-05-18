@@ -13,9 +13,9 @@ const { lang } = Astro.props as Props;
 const content = getContent(SERVICES_CONTENT, lang);
 ---
 
-<section class="services-section">
-  <Typography as="h2" variant="headline" class="mb-5 text-3xl">{content.title}</Typography>
-  <div class="services-section__grid">
+<section>
+  <Typography as="h2" variant="headline" class="mb-5">{content.title}</Typography>
+  <div class="grid gap-4 md:grid-cols-2 md:gap-5">
     {
       content.items.map((service) => (
         <ServiceCard

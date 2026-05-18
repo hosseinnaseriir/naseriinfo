@@ -7,12 +7,12 @@ interface Props {
 const { id, label } = Astro.props;
 ---
 
-<label for={id} class="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
+<label for={id} class="inline-flex items-center gap-2 text-sm text-text-muted">
   <input
     id={id}
     name={id}
     type="checkbox"
-    class="h-4 w-4 rounded border border-[var(--color-border)] accent-slate-700"
+    class="size-4 rounded border border-border accent-primary"
   />
-  <span>{label}</span>
+  {label}
 </label>
