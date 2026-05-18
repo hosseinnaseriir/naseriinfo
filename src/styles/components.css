@@ -307,6 +307,30 @@ html[data-theme="light"] .theme-icon-dark {
   color: var(--color-text-muted);
 }
 
+.service-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  margin-top: var(--space-4);
+  font-size: var(--text-body2);
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.service-card__cta::after {
+  content: "→";
+}
+
+html[dir="rtl"] .service-card__cta::after {
+  content: "←";
+}
+
+.service-card__cta:hover {
+  opacity: 0.85;
+}
+
 .services-section__grid {
   display: grid;
   gap: var(--space-4);

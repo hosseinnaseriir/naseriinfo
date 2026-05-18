@@ -22,8 +22,8 @@ const content = getContent(SERVICES_CONTENT, lang);
           title={service.title}
           description={service.description}
           icon={service.icon}
-          available={service.available}
-          availableLabel={service.available ? content.availableLabel : undefined}
+          ctaLabel={service.ctaLabel}
+          ctaHref={service.ctaHref}
         />
       ))
     }

@@ -1,25 +1,21 @@
 ---
 import Card from "./Card.astro";
-import CardBadge from "./CardBadge.astro";
 import CardContent from "./CardContent.astro";
 import Icon from "../icon/Icon.astro";
+import Link from "../link/Link.astro";
 
 interface Props {
   title: string;
   description: string;
   icon: string;
-  available?: boolean;
-  availableLabel?: string;
+  ctaLabel: string;
+  ctaHref: string;
 }
 
-const { title, description, icon, available = false, availableLabel } = Astro.props;
+const { title, description, icon, ctaLabel, ctaHref } = Astro.props;
 ---
 
 <Card as="article">
-  {available && availableLabel && (
-    <CardBadge hideLabelOnMobile accessibleLabel={availableLabel}>{availableLabel}</CardBadge>
-  )}
-
   <CardContent class="service-card__inner">
     <div class="service-card__icon-wrap" aria-hidden="true">
       <Icon name={icon} class="service-card__icon" />
@@ -28,6 +24,9 @@ const { title, description, icon, available = false, availableLabel } = Astro.pr
     <div class="service-card__body">
       <h3 class="service-card__title">{title}</h3>
       <p class="service-card__description">{description}</p>
+      <Link href={ctaHref} variant="unstyled" class="service-card__cta">
+        {ctaLabel}
+      </Link>
     </div>
   </CardContent>
 </Card>

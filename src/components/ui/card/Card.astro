@@ -7,13 +7,15 @@ interface Props {
   padding?: CardPadding;
   interactive?: boolean;
   class?: string;
+  id?: string;
 }
 
 const {
   as = "div",
   padding = "md",
   interactive = true,
-  class: className = ""
+  class: className = "",
+  id
 } = Astro.props as Props;
 
 const Tag = as;
@@ -36,6 +38,6 @@ const classes = [
   .join(" ");
 ---
 
-<Tag class={classes}>
+<Tag class={classes} id={id}>
   <slot />
 </Tag>
