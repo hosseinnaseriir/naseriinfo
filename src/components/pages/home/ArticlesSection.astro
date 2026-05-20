@@ -2,6 +2,8 @@
 import Card from "../../ui/card/Card.astro";
 import Typography from "../../ui/typography/Typography.astro";
 import ArticleCard from "../../ui/card/ArticleCard.astro";
+import Flex from "../../ui/layout/Flex.astro";
+import Link from "../../ui/link/Link.astro";
 import { HOME_ARTICLES_CONTENT } from "../../../assets/contents/pages/home/articles";
 import { getContent } from "../../../lib/content/ui-text";
 import type { ArticleSummary } from "../../../lib/content/articles";
@@ -14,18 +16,27 @@ interface Props {
 
 const { lang, articles } = Astro.props as Props;
 const content = getContent(HOME_ARTICLES_CONTENT, lang);
+const articlesHref = `/${lang}/articles`;
 ---
 
 <section>
-  <Typography as="h2" variant="headline" class="mb-4 text-3xl">{content.title}</Typography>
+  <Flex justify="between" align="center" gap="md" class="mb-4">
+    <Typography as="h2" variant="headline" class="text-3xl">{content.title}</Typography>
+    <Link href={articlesHref} variant="unstyled" class="service-card__cta mt-0 shrink-0">
+      {content.showMore}
+    </Link>
+  </Flex>
+
   {articles.length > 0 ? (
-    <div class="grid gap-4">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
       {articles.map((article) => (
         <ArticleCard
           title={article.title}
           date={article.publishedAt}
           excerpt={article.excerpt}
           href={`/${lang}/articles/${article.slug}`}
+          image={article.coverImage}
+          imageAlt={article.title}
         />
       ))}
     </div>

@@ -4,9 +4,18 @@ interface Props {
   label: string;
   placeholder?: string;
   type?: "text" | "email";
+  required?: boolean;
+  autocomplete?: string;
 }
 
-const { id, label, placeholder = "", type = "text" } = Astro.props;
+const {
+  id,
+  label,
+  placeholder = "",
+  type = "text",
+  required = false,
+  autocomplete
+} = Astro.props;
 ---
 
 <label for={id} class="flex flex-col gap-2">
@@ -16,6 +25,8 @@ const { id, label, placeholder = "", type = "text" } = Astro.props;
     name={id}
     type={type}
     placeholder={placeholder}
+    required={required}
+    autocomplete={autocomplete}
     class="rounded-md border border-border bg-surface px-3 py-2 text-text outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
   />
 </label>

@@ -3,9 +3,10 @@ interface Props {
   id: string;
   label: string;
   placeholder?: string;
+  required?: boolean;
 }
 
-const { id, label, placeholder = "" } = Astro.props;
+const { id, label, placeholder = "", required = false } = Astro.props;
 ---
 
 <label for={id} class="flex flex-col gap-2">
@@ -14,6 +15,7 @@ const { id, label, placeholder = "" } = Astro.props;
     id={id}
     name={id}
     placeholder={placeholder}
+    required={required}
     class="min-h-28 rounded-md border border-border bg-surface px-3 py-2 text-text outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
   ></textarea>
 </label>

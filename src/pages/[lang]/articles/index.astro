@@ -3,6 +3,7 @@ import Layout from "../../../layouts/Layout.astro";
 import SiteToolbar from "../../../components/layout/SiteToolbar.astro";
 import Container from "../../../components/ui/layout/Container.astro";
 import Typography from "../../../components/ui/typography/Typography.astro";
+import BackLink from "../../../components/ui/link/BackLink.astro";
 import ArticleCard from "../../../components/ui/card/ArticleCard.astro";
 import { ARTICLES_PAGE_CONTENT } from "../../../assets/contents/pages/articles/index";
 import { getContent } from "../../../lib/content/ui-text";
@@ -21,15 +22,18 @@ const articles = await getArticles(lang);
 <Layout locale={lang} title={content.title} description={content.description}>
   <SiteToolbar locale={lang} path={Astro.url.pathname} variant="fixed" />
   <Container as="main" class="py-4 md:py-6">
+    <BackLink href={`/${lang}`} label={content.back} class="mb-4" />
     <Typography as="h1" variant="headline" class="mb-6">{content.title}</Typography>
     {articles.length > 0 ? (
-      <div class="grid gap-4">
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
         {articles.map((article) => (
           <ArticleCard
             title={article.title}
             date={article.publishedAt}
             excerpt={article.excerpt}
             href={`/${lang}/articles/${article.slug}`}
+            image={article.coverImage}
+            imageAlt={article.title}
           />
         ))}
       </div>

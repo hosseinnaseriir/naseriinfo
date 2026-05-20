@@ -1,0 +1,22 @@
+---
+import Link from "./Link.astro";
+import Icon from "../icon/Icon.astro";
+
+interface Props {
+  href: string;
+  label: string;
+  class?: string;
+}
+
+const { href, label, class: className = "" } = Astro.props;
+---
+
+<Link
+  href={href}
+  variant="unstyled"
+  class={`back-link inline-flex items-center gap-1.5 text-sm font-semibold text-primary no-underline transition-opacity duration-150 hover:opacity-85 ${className}`.trim()}
+  external={false}
+>
+  <Icon name="arrow-left" class="back-link__icon inline-flex size-4 rtl:rotate-180" />
+  {label}
+</Link>

@@ -36,9 +36,8 @@ const heroContent = getContent(HERO_CONTENT, lang);
 
   <div slot="footer">
     <IntroTechMarquee items={INTRO_TECH_STACK} label={content.techMarqueeLabel} />
-
     <Flex gap="sm" class="popup-modal__footer-actions mt-5 md:mt-0">
-      <Button variant="primary">{heroContent.bookCall}</Button>
+      <Button href="#contact" variant="primary">{heroContent.bookCall}</Button>
       <Button href={`/${lang}/articles`} variant="secondary">{heroContent.readArticles}</Button>
     </Flex>
   </div>

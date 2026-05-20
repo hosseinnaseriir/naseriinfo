@@ -8,17 +8,40 @@ interface Props {
   excerpt: string;
   date: string;
   href: string;
+  image?: string;
+  imageAlt?: string;
 }
 
-const { title, excerpt, date, href } = Astro.props;
+const { title, excerpt, date, href, image, imageAlt = "" } = Astro.props;
 ---
 
-<Card as="article">
-  <CardContent>
-    <Link href={href} variant="card">
-      <h3 class="text-xl font-semibold">{title}</h3>
-      <p class="text-sm text-text-muted">{date}</p>
-      <p class="text-base text-text">{excerpt}</p>
+<Card as="article" padding="none" class="h-full">
+  <CardContent class="h-full">
+    <Link
+      href={href}
+      variant="unstyled"
+      class="flex h-full flex-col text-inherit no-underline md:flex-row"
+    >
+      {image ? (
+        <img
+          src={image}
+          alt={imageAlt}
+          loading="lazy"
+          decoding="async"
+          class="h-42 w-full shrink-0 object-cover md:h-full md:w-34"
+        />
+      ) : (
+        <div
+          class="h-42 w-full shrink-0 bg-linear-to-br from-primary/20 to-primary/5 md:h-full md:w-34"
+          aria-hidden="true"
+        />
+      )}
+
+      <div class="min-w-0 flex-1 p-4 transition-colors duration-150 hover:text-primary">
+        <h3 class="text-lg font-semibold leading-snug">{title}</h3>
+        <p class="mt-1 text-sm text-text-muted">{date}</p>
+        <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-text md:text-base">{excerpt}</p>
+      </div>
     </Link>
   </CardContent>
 </Card>

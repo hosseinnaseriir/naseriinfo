@@ -2,17 +2,19 @@
 interface Props {
   id: string;
   label: string;
+  required?: boolean;
 }
 
-const { id, label } = Astro.props;
+const { id, label, required = false } = Astro.props;
 ---
 
-<label for={id} class="inline-flex items-center gap-2 text-sm text-text-muted">
+<label for={id} class="flex w-full cursor-pointer items-start gap-2.5 text-sm leading-snug text-text-muted">
   <input
     id={id}
     name={id}
     type="checkbox"
-    class="size-4 rounded border border-border accent-primary"
+    required={required}
+    class="mt-0.5 size-4 shrink-0 rounded border border-border accent-primary"
   />
-  {label}
+  <span>{label}</span>
 </label>

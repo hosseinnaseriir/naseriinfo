@@ -20,7 +20,7 @@ const path = Astro.url.pathname;
 ---
 
 <SiteToolbar locale={lang} path={path} variant="anchored" />
-<section class="hero-section surface flex flex-col px-0 md:p-5">
+<section class="hero-section surface flex flex-col px-0 md:p-5" aria-labelledby="hero-headline">
   <Flex justify="between" align="center" gap="md" wrap={true} class="hero-top mb-2 md:mb-2">
     <Flex align="center" gap="sm" class="hero-top__profile min-w-0 flex-1 p-4 md:p-0">
       <div class="hero-avatar">
@@ -32,6 +32,7 @@ const path = Astro.url.pathname;
           height="80"
           class="hero-avatar__image"
           decoding="async"
+          fetchpriority="high"
         />
       </div>
       <div class="min-w-0 flex-1">
@@ -53,16 +54,22 @@ const path = Astro.url.pathname;
     <div class="mx-auto text-center md:px-2">
       <Typography
         as="h2"
+        id="hero-headline"
         variant="headline"
         class="hero-typewriter mb-3 font-semibold"
         data-text={JSON.stringify(content.headline)}
+        aria-live="polite"
       />
       <Typography variant="body2" class="hero-subheadline mb-6">{content.subheadline}</Typography>
 
       <Flex gap="sm" wrap={true} justify="center" class="hero-banner__actions">
-        <Button variant="primary">{content.bookCall}</Button>
-        <Button href={`/${lang}/articles`} variant="secondary" class="hero-banner__read-articles">{content.readArticles}</Button>
-        <Button variant="ghost" data-open-popup="intro-popup">{content.openIntro}</Button>
+        <Button href="#contact" variant="primary">{content.bookCall}</Button>
+        <Button href={`/${lang}/articles`} variant="secondary" class="hero-banner__read-articles">
+          {content.readArticles}
+        </Button>
+        <Button type="button" variant="ghost" data-open-popup="intro-popup">
+          {content.openIntro}
+        </Button>
       </Flex>
     </div>
   </div>
