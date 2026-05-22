@@ -41,6 +41,15 @@ export const FA_ARTICLES: ExternalArticle[] = [
     publishedAt: "1405-02-19",
     platform: "virgool",
     url: "https://virgool.io/@m_16982683/%DA%A9%D8%A7%D9%85%D9%BE%DB%8C%D9%88%D8%AA%D8%B1-%DA%86%D8%B7%D9%88%D8%B1-%D9%85%D8%AA%D9%86%DB%8C-%D9%85%D8%AB%D9%84-hi-%D8%B1%D9%88-%DA%86%D8%A7%D9%BE-%D9%85%DB%8C%DA%A9%D9%86%D9%87-wcvwtoncf1tp"
+  },
+  {
+    id: "ascii-translator-fa",
+    title: "کامپیوترها و انسان‌ها چطور با هم حرف می‌زنن؟ ASCII چیه؟",
+    description:
+      "در این مقاله درباره‌ی نقش ASCII به عنوان زبان مشترک بین انسان و کامپیوتر صحبت می‌کنیم و می‌بینیم که چطور حروف و کاراکترها به اعداد و بیت‌ها تبدیل می‌شوند.",
+    publishedAt: "1405-02-29",
+    platform: "virgool",
+    url: "https://virgool.io/@m_16982683/%DA%A9%D8%A7%D9%85%D9%BE%DB%8C%D9%88%D8%AA%D8%B1%D9%87%D8%A7-%D9%88-%D8%A7%D9%86%D8%B3%D8%A7%D9%86-%D9%87%D8%A7-%DA%86%D8%B7%D9%88%D8%B1-%D8%A8%D8%A7-%D9%87%D9%85-%D8%AD%D8%B1%D9%81-%D9%85%DB%8C-%D8%B2%D9%86%D9%86-ascii-%DA%86%DB%8C%D9%87-fgf0a59vubos"
   }
 ];
 
