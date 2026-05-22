@@ -1,40 +1,38 @@
-import { getCollection } from "astro:content";
+import { ARTICLES_BY_LOCALE, type ArticlePlatform, type ExternalArticle } from "../../assets/data/articles";
+import { ARTICLE_PLATFORM_LABELS } from "../../assets/contents/common/article-platforms";
+import { getContent } from "./ui-text";
 import type { Locale } from "../../i18n/config";
 
-export interface ArticleSummary {
-  slug: string;
+export type { ArticlePlatform, ExternalArticle };
+
+export interface ArticleItem {
+  id: string;
   locale: Locale;
   title: string;
-  excerpt: string;
+  description: string;
+  url: string;
+  platform: ArticlePlatform;
+  platformLabel: string;
   publishedAt: string;
-  coverImage?: string;
-  tags: string[];
 }
 
-export async function getArticles(locale: Locale): Promise<ArticleSummary[]> {
-  const items = await getCollection("articles");
-  const normalized = items.map((item) => ({
-    slug: item.id.replace(/\.(md|mdx)$/, ""),
-    locale: item.data.locale,
-    title: item.data.title,
-    excerpt: item.data.excerpt,
-    publishedAt: item.data.publishedAt,
-    coverImage: item.data.coverImage,
-    tags: item.data.tags
-  }));
+function toArticleItems(articles: ExternalArticle[], locale: Locale): ArticleItem[] {
+  const platformLabels = getContent(ARTICLE_PLATFORM_LABELS, locale);
 
-  const localized = normalized.filter((item) => item.locale === locale);
-  const source = localized.length > 0 ? localized : normalized;
-
-  return source
-    .map((item) => ({
-      slug: item.slug,
-      locale: item.locale,
-      title: item.title,
-      excerpt: item.excerpt,
-      publishedAt: item.publishedAt,
-      coverImage: item.coverImage,
-      tags: item.tags
+  return articles
+    .map((article) => ({
+      id: article.id,
+      locale,
+      title: article.title,
+      description: article.description,
+      url: article.url,
+      platform: article.platform,
+      platformLabel: platformLabels[article.platform],
+      publishedAt: article.publishedAt
     }))
     .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+}
+
+export function getArticles(locale: Locale): ArticleItem[] {
+  return toArticleItems(ARTICLES_BY_LOCALE[locale], locale);
 }

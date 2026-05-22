@@ -1,77 +1,33 @@
-# How to Write Articles
+# How to add external articles
 
-This project supports bilingual articles with `locale: en` or `locale: fa`.
+Articles are **not** stored as markdown in this repo. Each entry is a link to a post you published elsewhere (Medium, LinkedIn, Virgool, etc.).
 
-## 1) Create an article file
+## 1) Edit the article list
 
-Create a markdown file in:
+Open `src/assets/data/articles.ts` and add an object to `EN_ARTICLES` or `FA_ARTICLES`:
 
-- `src/content/articles/your-slug.md`
-
-Use this frontmatter:
-
-```md
----
-locale: en
-title: Your title
-excerpt: A short summary for cards and SEO
-publishedAt: "2026-04-30"
-tags: ["tag1", "tag2"]
-coverImage: "/media/articles/your-image.jpg"
----
+```ts
+{
+  id: "my-post-slug",
+  title: "Your article title",
+  description: "Short summary shown on the card.",
+  publishedAt: "2026-05-01",
+  platform: "medium", // medium | linkedin | virgool | x | devto
+  url: "https://medium.com/@you/your-post"
+}
 ```
 
-## 2) Locale rules
+- **English** → `EN_ARTICLES` (shown on `/en` and `/en/articles`)
+- **Farsi** → `FA_ARTICLES` (shown on `/fa` and `/fa/articles`)
 
-- English article: `locale: en`
-- Farsi article: `locale: fa`
-- Routing is automatic:
-  - EN: `/en/articles/<slug>`
-  - FA: `/fa/articles/<slug>`
+## 2) Platform badges
 
-## 3) Images in articles
+Labels are defined in `src/assets/contents/common/article-platforms.ts`.  
+Supported platforms: `medium`, `linkedin`, `virgool`, `x`, `devto`.
 
-For simple usage in markdown:
+To add a new platform, extend `ArticlePlatform` in `articles.ts`, add a label in `article-platforms.ts`, and optionally an icon in `ArticlePlatformBadge.astro`.
 
-```md
-![Alt text](/media/articles/sample.jpg)
-```
+## 3) Behaviour
 
-Best practice:
-
-- Put images under `public/media/articles/`
-- Always include descriptive `alt` text
-- Keep file size low (`webp` preferred)
-
-## 4) Videos in articles
-
-For markdown-only pages, use HTML iframe blocks:
-
-```html
-<div style="position:relative;padding-top:56.25%;">
-  <iframe
-    src="https://www.youtube.com/embed/VIDEO_ID"
-    title="Video"
-    loading="lazy"
-    allowfullscreen
-    style="position:absolute;inset:0;width:100%;height:100%;border:0;"
-  ></iframe>
-</div>
-```
-
-For app pages/components, use `VideoEmbed.astro`:
-
-- `src/components/ui/media/VideoEmbed.astro`
-- It selects YouTube/Aparat by locale preference
-
-## 5) Optional: component shortcodes in articles (recommended)
-
-If you want to use `<Figure />` and `<VideoEmbed />` directly inside article content, move to MDX.
-
-Install:
-
-```bash
-npm install @astrojs/mdx
-```
-
-Then add MDX integration in `astro.config.mjs`.
+- Cards on the home page and `/en/articles` / `/fa/articles` open the **external URL** in a new tab.
+- There is no on-site article detail page.

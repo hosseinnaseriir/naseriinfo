@@ -1,4 +1,5 @@
 import type { LocalizedContent } from "../../../../lib/content/ui-text";
+import { CONTACT_MAILTO } from "../../../data/contact";
 
 export type SocialLinkItem = {
   label: string;
@@ -12,7 +13,7 @@ export const SOCIAL_LINKS: SocialLinkItem[] = [
   { label: "X", icon: "x", href: "https://x.com/Ho3na3" },
   { label: "Medium", icon: "medium", href: "https://medium.com/@naseri.develop" },
   { label: "GitHub", icon: "github", href: "https://github.com/hosseinnaseriir" },
-  { label: "Email", icon: "email", href: "mailto:naseri.develop@gmail.com" },
+  { label: "Email", icon: "email", href: CONTACT_MAILTO },
   { label: "Telegram", icon: "telegram", href: "https://t.me/naseri_info" },
   { label: "Instagram", icon: "instagram", href: "https://instagram.com/naseri.info" },
   { label: "Reddit", icon: "reddit", href: "https://reddit.com/user/", disabled: true }

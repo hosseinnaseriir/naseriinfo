@@ -5,6 +5,7 @@ import Button from "../../ui/button/Button.astro";
 import SocialLink from "../../ui/link/SocialLink.astro";
 import SiteToolbar from "../../layout/SiteToolbar.astro";
 import { HERO_CONTENT, SOCIAL_LINKS } from "../../../assets/contents/pages/home/hero";
+import { CONTACT_MAILTO } from "../../../assets/data/contact";
 import { getContent } from "../../../lib/content/ui-text";
 import type { Locale } from "../../../i18n/config";
 import HeroSectionStyles from "./HeroSection.styles.astro";
@@ -63,7 +64,7 @@ const path = Astro.url.pathname;
       <Typography variant="body2" class="hero-subheadline mb-6">{content.subheadline}</Typography>
 
       <Flex gap="sm" wrap={true} justify="center" class="hero-banner__actions">
-        <Button href="#contact" variant="primary">{content.bookCall}</Button>
+        <Button href={CONTACT_MAILTO} variant="primary">{content.bookCall}</Button>
         <Button href={`/${lang}/articles`} variant="secondary" class="hero-banner__read-articles">
           {content.readArticles}
         </Button>

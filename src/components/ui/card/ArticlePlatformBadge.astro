@@ -1,0 +1,29 @@
+---
+import Icon from "../icon/Icon.astro";
+
+interface Props {
+  label: string;
+  platform: "medium" | "linkedin" | "virgool" | "x" | "devto";
+}
+
+const { label, platform } = Astro.props;
+
+const iconByPlatform: Partial<Record<Props["platform"], string>> = {
+  medium: "medium",
+  linkedin: "linkedin",
+  x: "x"
+};
+const icon = iconByPlatform[platform];
+const virgoolIconSrc = "/icons/virgool.webp";
+---
+
+<span
+  class="inline-flex w-fit items-center gap-1.5 rounded-full border border-border bg-text-muted/10 px-2.5 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-text-muted"
+>
+  {platform === "virgool" ? (
+    <img src={virgoolIconSrc} alt="" width="14" height="14" class="size-3.5 shrink-0 object-contain" loading="lazy" decoding="async" />
+  ) : icon ? (
+    <Icon name={icon} class="inline-flex size-3.5 [&_svg]:size-full" />
+  ) : null}
+  {label}
+</span>

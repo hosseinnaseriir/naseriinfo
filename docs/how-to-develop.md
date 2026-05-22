@@ -18,7 +18,7 @@ npm run build
 
 - UI primitives and components: `src/components/ui/`
 - Content adapter layer: `src/lib/content/`
-- Content source: `src/content/articles/`
+- External articles data: `src/assets/data/articles.ts`
 - Localized pages: `src/pages/[lang]/`
 - Design tokens: `src/styles/tokens.css`
 - Project rules: `.cursor/rules/`
@@ -27,8 +27,7 @@ npm run build
 
 - Supported locales: `en`, `fa`
 - Homepages: `/en`, `/fa`
-- Article listing: `/<lang>/articles`
-- Article detail: `/<lang>/articles/<slug>`
+- Article listing: `/<lang>/articles` (links open external platforms)
 - `Layout.astro` adds:
   - language direction (`dir`)
   - canonical link
@@ -46,9 +45,6 @@ Important:
   - `astro.config.mjs` via `site`
   - `public/robots.txt` sitemap URL
 
-## Media workflow
+## Articles
 
-- Store static images in `public/media/`
-- Use markdown image syntax for article body
-- Use `VideoEmbed.astro` for locale-aware embeds in pages
-- Optional MDX unlocks direct component shortcodes in content
+- See `docs/how-to-write-articles.md` for adding Medium, LinkedIn, Virgool, etc.

@@ -6,7 +6,7 @@ export const LAYOUT_CONTENT = {
     defaultDescription: "Personal website"
   },
   fa: {
-    defaultTitle: "ناصری اینفو",
+    defaultTitle: "Naseri Info",
     defaultDescription: "وب‌سایت شخصی"
   }
 } satisfies LocalizedContent<{

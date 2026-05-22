@@ -21,10 +21,10 @@ alwaysApply: true
 - URLs, social link lists, and non-translated config use `UPPER_SNAKE_CASE` (e.g. `SOCIAL_LINKS`, `HERO_VIDEO`).
 - Keep them in the same content module as related copy when they belong to one feature.
 
-## Long-form content
+## External articles
 
-- Use adapter modules in `src/lib/content` to read article/CMS data.
-- Pages and cards consume adapter output, not raw collection APIs directly.
-- Keep article shape stable: `slug`, `title`, `excerpt`, `publishedAt`, `coverImage`, `tags`.
-- Store local content in Astro collections under `src/content`.
-- If CMS is added later, replace adapter internals and keep component interfaces unchanged.
+- Store entries in `src/assets/data/articles.ts` (`EN_ARTICLES`, `FA_ARTICLES`).
+- Resolve via `getArticles(locale)` in `src/lib/content/articles.ts`.
+- Each entry: `id`, `title`, `description`, `url`, `platform`, `publishedAt` (locale implied by list).
+- Platform labels: `src/assets/contents/common/article-platforms.ts`.
+- Cards link externally (new tab); no on-site article detail pages.

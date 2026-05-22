@@ -8,6 +8,7 @@ import IntroPopupStyles from "./IntroPopup.styles.astro";
 import { INTRO_CONTENT } from "../../../assets/contents/pages/home/intro";
 import { INTRO_TECH_STACK } from "../../../assets/contents/pages/home/intro-tech";
 import { HERO_CONTENT } from "../../../assets/contents/pages/home/hero";
+import { CONTACT_MAILTO } from "../../../assets/data/contact";
 import { getContent } from "../../../lib/content/ui-text";
 import type { Locale } from "../../../i18n/config";
 
@@ -37,7 +38,7 @@ const heroContent = getContent(HERO_CONTENT, lang);
   <div slot="footer">
     <IntroTechMarquee items={INTRO_TECH_STACK} label={content.techMarqueeLabel} />
     <Flex gap="sm" class="popup-modal__footer-actions mt-5 md:mt-0">
-      <Button href="#contact" variant="primary">{heroContent.bookCall}</Button>
+      <Button href={CONTACT_MAILTO} variant="primary">{heroContent.bookCall}</Button>
       <Button href={`/${lang}/articles`} variant="secondary">{heroContent.readArticles}</Button>
     </Flex>
   </div>

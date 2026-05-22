@@ -2,45 +2,31 @@
 import Card from "./Card.astro";
 import CardContent from "./CardContent.astro";
 import Link from "../link/Link.astro";
+import ArticlePlatformBadge from "./ArticlePlatformBadge.astro";
 
 interface Props {
   title: string;
-  excerpt: string;
-  date: string;
+  description: string;
   href: string;
-  image?: string;
-  imageAlt?: string;
+  platform: "medium" | "linkedin" | "virgool" | "x" | "devto";
+  platformLabel: string;
+  publishedAt?: string;
 }
 
-const { title, excerpt, date, href, image, imageAlt = "" } = Astro.props;
+const { title, description, href, platform, platformLabel, publishedAt } = Astro.props;
 ---
 
-<Card as="article" padding="none" class="h-full">
+<Card as="article" padding="md" class="h-full">
   <CardContent class="h-full">
-    <Link
-      href={href}
-      variant="unstyled"
-      class="flex h-full flex-col text-inherit no-underline md:flex-row"
-    >
-      {image ? (
-        <img
-          src={image}
-          alt={imageAlt}
-          loading="lazy"
-          decoding="async"
-          class="h-42 w-full shrink-0 object-cover md:h-full md:w-34"
-        />
-      ) : (
-        <div
-          class="h-42 w-full shrink-0 bg-linear-to-br from-primary/20 to-primary/5 md:h-full md:w-34"
-          aria-hidden="true"
-        />
-      )}
+    <Link href={href} variant="unstyled" class="flex h-full flex-col gap-3 text-inherit no-underline" external={true}>
+      <div class="flex items-start justify-between gap-3">
+        <ArticlePlatformBadge label={platformLabel} platform={platform} />
+        {publishedAt ? <time class="shrink-0 text-xs text-text-muted" datetime={publishedAt}>{publishedAt}</time> : null}
+      </div>
 
-      <div class="min-w-0 flex-1 p-4 transition-colors duration-150 hover:text-primary">
+      <div class="min-w-0 flex-1 transition-colors duration-150 hover:text-primary">
         <h3 class="text-lg font-semibold leading-snug">{title}</h3>
-        <p class="mt-1 text-sm text-text-muted">{date}</p>
-        <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-text md:text-base">{excerpt}</p>
+        <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-text-muted md:text-base">{description}</p>
       </div>
     </Link>
   </CardContent>

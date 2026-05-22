@@ -1,4 +1,5 @@
 import type { LocalizedContent } from "../../../../lib/content/ui-text";
+import { CONTACT_MAILTO } from "../../../data/contact";
 
 export type ServiceItem = {
   title: string;
@@ -18,7 +19,7 @@ export const SERVICES_CONTENT = {
           "1:1 mentoring for students and junior developers who want practical backend engineering guidance.",
         icon: "graduation-cap",
         ctaLabel: "Explore Mentorship",
-        ctaHref: "#contact"
+        ctaHref: CONTACT_MAILTO
       },
       {
         title: "For Startups",
@@ -26,7 +27,7 @@ export const SERVICES_CONTENT = {
           "Architecture consulting and engineering guidance for startups building scalable products.",
         icon: "layers",
         ctaLabel: "Discuss Your Product",
-        ctaHref: "#contact"
+        ctaHref: CONTACT_MAILTO
       }
     ] satisfies ServiceItem[]
   },
@@ -39,7 +40,7 @@ export const SERVICES_CONTENT = {
           "منتورینگ یک‌به‌یک برای دانشجویان و توسعه‌دهندگان تازه‌کار که به دنبال راهنمایی عملی مهندسی بک‌اند هستند.",
         icon: "graduation-cap",
         ctaLabel: "کاوش منتورینگ",
-        ctaHref: "#contact"
+        ctaHref: CONTACT_MAILTO
       },
       {
         title: "برای استارتاپ‌ها",
@@ -47,7 +48,7 @@ export const SERVICES_CONTENT = {
           "مشاوره معماری و راهنمایی مهندسی برای استارتاپ‌هایی که محصول مقیاس‌پذیر می‌سازند.",
         icon: "layers",
         ctaLabel: "گفتگو درباره محصول شما",
-        ctaHref: "#contact"
+        ctaHref: CONTACT_MAILTO
       }
     ] satisfies ServiceItem[]
   }

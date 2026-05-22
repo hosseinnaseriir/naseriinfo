@@ -1,12 +1,9 @@
 ---
 import Card from "../../ui/card/Card.astro";
 import Typography from "../../ui/typography/Typography.astro";
-import Input from "../../ui/form/Input.astro";
-import TextArea from "../../ui/form/TextArea.astro";
-import Checkbox from "../../ui/form/Checkbox.astro";
 import Button from "../../ui/button/Button.astro";
-import Stack from "../../ui/layout/Stack.astro";
 import { CONTACT_CONTENT } from "../../../assets/contents/pages/home/contact";
+import { CONTACT_MAILTO } from "../../../assets/data/contact";
 import { getContent } from "../../../lib/content/ui-text";
 import type { Locale } from "../../../i18n/config";
 
@@ -16,42 +13,12 @@ interface Props {
 
 const { lang } = Astro.props as Props;
 const content = getContent(CONTACT_CONTENT, lang);
-const { fields } = content;
 ---
 
 <Card as="section" id="contact" interactive={false} padding="md">
   <Typography as="h2" variant="body1" class="mb-4 font-semibold">{content.title}</Typography>
-
-  <form class="flex flex-col" method="post" name="contact">
-    <Stack gap="md">
-      <Input
-        id="contact-title"
-        label={fields.title}
-        placeholder={fields.titlePlaceholder}
-        required={true}
-        autocomplete="organization-title"
-      />
-      <Input
-        id="contact-email"
-        type="email"
-        label={fields.email}
-        placeholder={fields.emailPlaceholder}
-        required={true}
-        autocomplete="email"
-      />
-      <TextArea
-        id="contact-message"
-        label={fields.message}
-        placeholder={fields.messagePlaceholder}
-        required={true}
-      />
-    </Stack>
-
-    <div class="mt-5 flex flex-col gap-4 border-t border-border pt-5">
-      <Checkbox id="contact-agree" label={fields.agree} required={true} />
-      <Button type="submit" variant="primary" class="self-start">
-        {content.submit}
-      </Button>
-    </div>
-  </form>
+  <Typography variant="body2" class="mb-5 text-text-muted">{content.disabledNote}</Typography>
+  <Button href={CONTACT_MAILTO} variant="primary" class="self-start">
+    {content.emailCta}
+  </Button>
 </Card>
